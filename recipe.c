@@ -8,7 +8,7 @@ int main(void) {
     int recipeCount = 0;
     int choice, ingNum;
 
-    while(1) {
+    while(recipeCount < RECIPES_SIZE) {
         
         printf("1. Add Recipe\n");
         printf("2. View Recipe\n");
