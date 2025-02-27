@@ -10,6 +10,6 @@ struct Ingredient {
 
 struct Recipe {
     char name[NAME_SIZE];
-    struct Ingredient ingredients[ING_AMT];
-    int ingCount;
+    struct Ingredient ingredients[ING_AMT]; //struct of ingredients so i can loop through the amount and name separately from the recipe
+    int ingCount; //ingredient count needed so each recipe could have differing amounts of ingredients
 };
