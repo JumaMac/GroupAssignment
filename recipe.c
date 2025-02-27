@@ -8,7 +8,7 @@ int main(void) {
     int recipeCount = 0;
     int choice, ingNum;
 
-    while(recipeCount < RECIPES_SIZE) {
+    while(1) {
         
         printf("1. Add Recipe\n");
         printf("2. View Recipe\n");
@@ -41,8 +41,10 @@ int main(void) {
                 scanf("%d", &recipes[recipeCount].ingredients[i].amount);
             }
 
-            printf("Recipe has been added\n");
+            recipes[recipeCount].ingCount = ingNum;
             recipeCount++;    
+            printf("Recipe has been added\n");
+           
         } else if (choice == 2) {
 
             if (recipeCount == 0) {
@@ -54,16 +56,16 @@ int main(void) {
                     printf("Recipe %d: \n", i + 1);
                     printf("Name: %s\n", recipes[i].name);
                     printf("Ingredients: \n");
-                    for (int j = 0; j < ingNum; j++) {
+                    for (int j = 0; j < recipes[i].ingCount; j++) {
                         printf(" -%s: %dg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
                     }
                 }
             }
         } else if (choice == 3) {
-            printf("Exiting Software..");
+            printf("Exiting Software..\n");
             break;
         } else {
-            printf("Invalid input");
+            printf("Invalid input\n");
         }        
     }
 

@@ -11,4 +11,5 @@ struct Ingredient {
 struct Recipe {
     char name[NAME_SIZE];
     struct Ingredient ingredients[ING_AMT];
+    int ingCount;
 };
