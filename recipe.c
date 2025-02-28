@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include "recipe.h"
+#include "database.h"
 #define RECIPES_SIZE 25
 
 int main(void) {
 
     struct Recipe recipes[RECIPES_SIZE];
-    int recipeCount = 0;
+    int recipeCount = initRecipes(recipes);
     int choice, ingNum;
 
     while(1) { // want code to run infinitely since you want to access the recipes even if it is completely filled 
@@ -48,13 +49,13 @@ int main(void) {
         } else if (choice == 2) {
 
             if (recipeCount == 0) {
-                printf("No available recipes.");
+                printf("No available recipes.\n\n");
                 continue;
             } else {
                 // print out the recipes that were inputted outputting the names and ingredients being used
                 printf("Recipes: \n");
                 for (int i = 0; i < recipeCount; i++) {
-                    printf("Recipe %d: \n", i + 1);
+                    printf("Recipe %d: \n-----------\n", i + 1);
                     printf("Name: %s\n", recipes[i].name);
                     printf("Ingredients: \n");
                     for (int j = 0; j < recipes[i].ingCount; j++) {

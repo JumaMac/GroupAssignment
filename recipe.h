@@ -6,6 +6,7 @@
 struct Ingredient {
     char name[ING_SIZE];
     int amount; 
+
 };
 
 struct Recipe {
