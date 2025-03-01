@@ -1,15 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "recipe.h"
+#include <string.h>
 
 #define RECIPES_SIZE 25
 #define ING_AMT 10  // Define max ingredient amount for recipes user adds
 
+struct Ingredient {
+    char name[50];
+    int amount;
+};
+
+struct Recipe {
+    char name[100];
+    struct Ingredient ingredients[ING_AMT];
+    int ingCount;
+};
+
 int main() {
     int choice;
     int cat_choice;
-    int veg_choice;
     struct Recipe recipes[RECIPES_SIZE];
     int recipeCount = 0;
     int ingNum;
@@ -18,33 +28,32 @@ int main() {
 
         // Home page
         system("clear");
-        printf("==============================\n");
-        printf("🍟🍕🌭🥪🌮🌯🫔🥙🧆🥚🍳🥘🍲🍘🍙🍛\n");
-        printf("       ==================     \n");
-        printf("      |  THE RECIPE BOX  |     \n");
-        printf("       ==================     \n");
-        printf("🍟🍕🌭🥪🌮🌯🫔🥙🧆🥚🍳🥘🍲🍘🍙🍛\n");
-        printf("==============================\n");
-        printf("      Welcome to Home Page     \n");
-        printf("==============================\n");
+        printf("████████╗██╗  ██╗███████╗    ██████╗ ███████╗ ██████╗██╗██████╗ ███████╗    ██████╗  ██████╗ ██╗  ██╗\n");
+        printf("╚══██╔══╝██║  ██║██╔════╝    ██╔══██╗██╔════╝██╔════╝██║██╔══██╗██╔════╝    ██╔══██╗██╔═══██╗╚██╗██╔╝\n");
+        printf("   ██║   ███████║█████╗      ██████╔╝█████╗  ██║     ██║██████╔╝█████╗      ██████╔╝██║   ██║ ╚███╔╝ \n");
+        printf("   ██║   ██╔══██║██╔══╝      ██╔══██╗██╔══╝  ██║     ██║██╔═══╝ ██╔══╝      ██╔══██╗██║   ██║ ██╔██╗ \n");
+        printf("   ██║   ██║  ██║███████╗    ██║  ██║███████╗╚██████╗██║██║     ███████╗    ██████╔╝╚██████╔╝██╔╝ ██╗\n");
+        printf("   ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝╚═╝     ╚══════╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝\n");
 
-        printf("1. All Recipes\n");
-        printf("2. Your Recipes\n");
-        printf("3. Game Section\n");
-        printf("4. Quit\n");
+        printf("=====================================================================================================\n");
+        printf("              ░█▀▀░█▀█░█▀█░█░█░░░░░░█▀▀░█▀▄░█▀▀░█▀█░▀█▀░█▀▀░░░░░░█▀▀░█▀█░▀▀█░█▀█░█░█░░░              \n");
+        printf("              ░█░░░█░█░█░█░█▀▄░░░░░░█░░░█▀▄░█▀▀░█▀█░░█░░█▀▀░░░░░░█▀▀░█░█░░░█░█░█░░█░░░░              \n");
+        printf("              ░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀░░░░▀▀▀░▀░▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░░░▀▀▀░▀░▀░▀▀░░▀▀▀░░▀░░▀░              \n");
+        printf("=====================================================================================================\n");
+
+        printf("[1] All Recipes\n");
+        printf("[2] Your Recipes\n");
+        printf("[3] Game Section\n");
+        printf("[0] Quit\n");
         printf("Enter your choice: ");
 
-        if (scanf("%d", &choice) != 1) {
-            printf("Invalid input. Exiting.\n");
-            return 1;
-        }
+        scanf("%d", &choice);
         
 
         switch (choice) {
 
             case 1: // All Recipes
-            
-
+                while (1) {  // Loop to stay in the category selection menu
                     printf("\nSelect a Recipe Category:\n");
                     printf("[1] Breakfast & Brunch\n");
                     printf("[2] Lunch Specials\n");
@@ -53,63 +62,53 @@ int main() {
                     printf("[5] Vegetarian & Vegan\n");
                     printf("[0] Go Back\n");
                     printf("Enter your choice: ");
-                    
 
-                    scanf("%d\n", &cat_choice);
-                    
-                    switch (cat_choice)
-                    {
-                    case 0:
+                    scanf("%d", &cat_choice);  
 
-                        break;
-                    // this is where we need to add the recipes !!IMPORTANT
+                    if (cat_choice == 0) break; // Go back to home page
 
-                    case 1: //breakfast and brunch
+                    switch (cat_choice) {
+                        case 1:
+                            printf("\n\033[1mBreakfast & Brunch:\033[0m\n");
+                            printf("[1] 10-Minute Mushroom Avocado Toast\n");
+                            printf("[2] Easy Vegan French Toast (10 Minutes!)\n\n");
 
-                        break;
-
-                    case 2: //lunch specials
-
-                        break;
-
-                    case 3: //dinner delights
-
-                        break;
-
-                    case 4: //desserts & sweets
-
-                        printf("Goodbye!\n");
-                        exit(0);
-
-                        break;
-
-                    case 5: //vegetarian & vegan
-
-                            if (veg_choice == 1) {
-
-                            } else if (veg_choice == 2) {
-
-                            } else {
-
-                            }
-                        break;
-
-                    default:
-                        printf("Invalid input. Try again.\n");
-                        continue;
-
-                        break;
+                            break;
+                        case 2:
+                            printf("\n\033[1mLunch Specials:\033[0m\n");
+                            printf("[1] Sun-Dried Tomato Pesto Pasta (Vegan + GF)\n");
+                            printf("[2] The Ultimate Salmon Burger (30 Minutes!)\n\n");
+                            break;
+                        case 3:
+                            printf("\n\033[1mDinner Delights:\033[0m\n");
+                            printf("[1] Honey Garlic Salmon Bites\n");
+                            printf("[2] Chicken Noodle Soup (Classic or Immune-Boosting!)\n\n");
+                            break;
+                        case 4:
+                            printf("\n\033[1mDesserts & Sweets:\033[0m\n");
+                            printf("[1] Homemade Gluten-Free Oreos (Vegan)\n");
+                            printf("[2] The BEST Chocolate Cake Mix Cookies\n\n");
+                            break;
+                        case 5:
+                            printf("\n\033[1mVegetarian & Vegan:\033[0m\n");
+                            printf("[1] 10-Minute Mushroom Avocado Toast\n");
+                            printf("[2] Easy Vegan French Toast (10 Minutes!)\n");
+                            printf("[3] Sun-Dried Tomato Pesto Pasta (Vegan + GF)\n");
+                            printf("[4] Homemade Gluten-Free Oreos (Vegan)\n");
+                            printf("[5] The BEST Chocolate Cake Mix Cookies\n\n");
+                            break;
+                        default:
+                            printf("Invalid input. Try again.\n");
+                            break;
                     }
-
-                   
-                
-            break;
+                }
+                break;
 
             case 2: // Your Recipes
                 while (1) {
-                    printf("\n1. Add Recipe\n");
-                    printf("2. View Recipes\n");
-                    printf("3. Go Back\n");
+                    printf("\n[1] Add Recipe\n");
+                    printf("[2] View Recipes\n");
+                    printf("[0] Go Back\n");
                     printf("Enter your choice: ");
 
                     if (scanf("%d", &choice) != 1) {
@@ -117,7 +116,7 @@ int main() {
                         continue;
                     }
 
-                    if (choice == 3) {
+                    if (choice == 0) {
                         break; // Go back to the main menu
                     } else if (choice == 1) {
                         if (recipeCount >= RECIPES_SIZE) {
@@ -143,6 +142,7 @@ int main() {
                             scanf("%d", &recipes[recipeCount].ingredients[i].amount);
                         }
 
+                        recipes[recipeCount].ingCount = ingNum;
                         printf("Recipe has been added!\n");
                         recipeCount++;
                     } else if (choice == 2) {
@@ -154,7 +154,7 @@ int main() {
                                 printf("Recipe %d: \n", i + 1);
                                 printf("Name: %s\n", recipes[i].name);
                                 printf("Ingredients: \n");
-                                for (int j = 0; j < ingNum; j++) {
+                                for (int j = 0; j < recipes[i].ingCount; j++) {
                                     printf(" - %s: %dg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
                                 }
                             }
@@ -163,104 +163,30 @@ int main() {
                         printf("Invalid input. Try again.\n");
                     }
                 }
-            break;
+                break;
 
-            case 3: // Games
-                printf("Game Section (Feature Coming Soon!)\n");
-            break;
+            case 3: // Game Section
+                {
+                    printf("Play fun games here as your food cooks! (Feature Coming Soon)\n");
+                    printf("Press Enter to go back to the home page...\n");
 
-            case 4: //Exit program
-                    return 0;
-            break;
+                    // Wait for user input to go back to the home page
+                    getchar();  // This is to capture the newline character left in the input buffer after previous input
+                    getchar();  // Wait for the user to press Enter
+
+                }
+                break;
+
+
+            case 0: // Exit program
+                return 0;
+                break;
 
             default:
                 printf("Invalid choice. Try again.\n");
-            break;
+                break;
         }
     }
 
     return 0;
 }
-
-   
-
-    // // Handle All Recipes selection
-    // if (choice == 1) {
-    //     // All Recipes menu with categories
-        
-
-    //         if (cat_choice_char == '0') {
-    //             printf("Returning to the home page...\n");
-    //             break;
-    //         }
-
-    //         // Handle category choices
-    //         if (cat_choice_char == '1') {
-    //             printf("You selected Breakfast & Brunch.\n");
-    //         } else if (cat_choice_char == '2') {
-    //             printf("You selected Lunch Specials.\n");
-    //         } else if (cat_choice_char == '3') {
-    //             printf("You selected Dinner Delights.\n");
-    //         } else if (cat_choice_char == '4') {
-    //             printf("You selected Desserts & Sweets.\n");
-    //         } else if (cat_choice_char == '5') {
-    //             // Handle Vegetarian & Vegan subcategories
-    //             while (1) {
-    //                 printf("\nVegetarian & Vegan Options:\n");
-    //                 printf("[1] Vegetarian\n");
-    //                 printf("[2] Vegan\n");
-    //                 printf("[0] Go Back\n");
-    //                 printf("[Q] Quit\n");
-    //                 printf("Enter your choice: ");
-    //                 getchar();  // To capture the newline character
-    //                 char veg_choice_char = getchar();
-    //                 veg_choice_char = toupper(veg_choice_char);  // Uppercase
-
-    //                 if (veg_choice_char == 'Q') {
-    //                     printf("Goodbye!\n");
-    //                     return 0;
-    //                 }
-
-    //                 if (veg_choice_char == '0') {
-    //                     printf("Returning to the previous level...\n");
-    //                     break;
-    //                 }
-
-    //                 if (veg_choice_char == '1') {
-    //                     printf("You selected Vegetarian Recipes.\n");
-    //                 } else if (veg_choice_char == '2') {
-    //                     printf("You selected Vegan Recipes.\n");
-    //                 } else {
-    //                     printf("Invalid choice. Try again.\n");
-    //                 }
-    //             }
-    //         } else {
-    //             printf("Invalid choice. Try again.\n");
-    //         }
-    //     }
-    // }
-
-    // // Handle Your Recipes selection
-    // if (choice == 2) {
-    //     printf("\nYour Recipes Section:\n");
-    //     printf("This is where you can manage your saved recipes.\n");
-    //     printf("Press any key to go back to the home page.\n");
-    //     getchar();  // To capture the enter key
-    //     getchar();  // Wait for user to press a key to continue
-    // }
-
-    // // Handle Game Section selection
-    // if (choice == 3) {
-    //     printf("\nGame Section:\n");
-    //     printf("This is the game section! (You can add a game later)\n");
-    //     printf("Press any key to go back to the home page.\n");
-    //     getchar();  // To capture the enter key
-    //     getchar();  // Wait for user to press a key to continue
-    // }
-
-    // // Quit the program
-    // if (choice == 4) {
-    //     printf("Goodbye!\n");
-    //     return 0;
-    // }
-
