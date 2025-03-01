@@ -1,10 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+#include <stdio.h>   // For printing output and reading input.
+#include <stdlib.h>  // For memory management and other general functions.
+#include <ctype.h>   // For checking and modifying characters (like letters and numbers).
+#include <string.h>  // For working with strings (copy, compare, length, etc.).
+
+// ⭐️ code by justin
 
 #define RECIPES_SIZE 25
 #define ING_AMT 10  // Define max ingredient amount for recipes user adds
+#define NAME_SIZE 50
+#define ING_SIZE 50
+
 
 struct Ingredient {
     char name[50];
@@ -17,6 +22,8 @@ struct Recipe {
     int ingCount;
 };
 
+// ⭐️ end of code by justin
+
 int main() {
     int choice;
     int cat_choice;
@@ -24,6 +31,7 @@ int main() {
     int recipeCount = 0;
     int ingNum;
 
+// ⭐️ code by Jaismin
     while (1) {  // Program loop to allow navigation back
 
         // Home page
@@ -71,7 +79,79 @@ int main() {
                         case 1:
                             printf("\n\033[1mBreakfast & Brunch:\033[0m\n");
                             printf("[1] 10-Minute Mushroom Avocado Toast\n");
-                            printf("[2] Easy Vegan French Toast (10 Minutes!)\n\n");
+                            printf("[2] Easy Vegan French Toast (10 Minutes!)\n");
+                            printf("[0] Go back\n\n");
+
+                                int recipe_choice, servings;
+
+                            printf("Enter your choice: ");
+                            scanf("%d", &recipe_choice);
+
+                            if (recipe_choice == 0) {
+                                break; // Goes back to category selection
+                            }
+
+                            switch (recipe_choice) {
+                                    case 1: // "10-Minute Mushroom Avocado Toast
+                                            printf("\n\033[1m10-Minute Mushroom Avocado Toast\033[0m\n");
+                                            printf("The ultimate plant-based breakfast: avocado toast with savory sautéed mushrooms.\n"
+                                                    "SO satisfying, perfectly toasty, and ready in just 10 minutes with 1 pan and 7 ingredients!\n\n");
+                                            printf("How many servings do you want to make?: ");
+                                            
+                                            scanf("%d", &servings);
+// ⭐️ code by mikey 
+                                            //ingredient list 
+                                            char *ingredients[] = {
+                                                "Bread Slices (oz)", 
+                                                "Medium Ripe Avocado (each)", 
+                                                "Vegan Butter (Tbsp)", 
+                                                "Sliced Shiitake Mushrooms (oz)", 
+                                                "Dried Thyme (tsp)", 
+                                                "Red Pepper Flakes (pinch)", 
+                                                "Sea Salt (pinch)", 
+                                                "Black Pepper (pinch)", 
+                                                "Garlic Powder (tsp)"
+                                            };
+
+
+                                            float quantities[] = {2, 0.5, 1, 7, 0.5, 1, 1, 1, 0.25}; // Base quantities for 2 servings
+
+
+                                            
+                                            for (int i = 0; i < 9; i++) {
+                                                    quantities[i] *= servings;
+                                            }
+
+                                            
+                                            printf("\nFor %d servings, you will need:\n", servings);
+                                            for (int i = 0; i < 9; i++) {
+                                                    printf("%.2f %s\n", quantities[i], ingredients[i]);
+                                            }
+// ⭐️ end of code by mikey
+// ⭐️ code by jaismin
+                                            printf("\n\033[1mInstructions:\033[0m\n"
+                                                    "1. Heat vegan butter or olive oil in a large skillet over medium heat.\n"
+                                                    "2. Add the sliced mushrooms, thyme, and red pepper flakes (optional). Cook, stirring occasionally, until softened and lightly browned — about 5-7 minutes. If the mushrooms are sticking to the pan, reduce the heat slightly or add more butter or oil.\n"
+                                                    "3. Meanwhile, toast bread in the oven or a toaster.\n"
+                                                    "4. Once the mushrooms are lightly browned, turn off the heat and stir in the salt, pepper, and garlic powder. Taste and adjust as needed, adding more salt to taste or black pepper for spice.\n"
+                                                    "5. Top the toasted bread with ripe avocado and use a fork to smash. Then top with sautéed mushroom mixture and vegan parmesan cheese (optional).\n"
+                                                    "6. Eat, repeat, enjoy!\n\n"
+                                                    "Best when fresh. Not freezer friendly.\n\n");
+
+
+                                            printf("\n[0] Return to Category Menu\n\n");
+                                            printf("Enter your choice: ");
+                                            scanf("%d", &recipe_choice);
+                                            if (recipe_choice == 0) {
+                                                    break; // Go back
+                                            }
+                                        break;
+
+                                    
+                                    default:
+                                            printf("Invalid choice. Returning to menu.\n");
+                                    break;
+                                }
 
                             break;
                         case 2:
@@ -105,6 +185,8 @@ int main() {
                 break;
 
             case 2: // Your Recipes
+// ⭐️ end of code by jaismin
+// ⭐️ code by Justin
                 while (1) {
                     printf("\n[1] Add Recipe\n");
                     printf("[2] View Recipes\n");
@@ -163,8 +245,9 @@ int main() {
                         printf("Invalid input. Try again.\n");
                     }
                 }
+// ⭐️ end of code by Justin
                 break;
-
+// ⭐️ code by jaismin
             case 3: // Game Section
                 {
                     printf("Play fun games here as your food cooks! (Feature Coming Soon)\n");
@@ -190,3 +273,4 @@ int main() {
 
     return 0;
 }
+// ⭐️ end of code by Jaismin
