@@ -2,27 +2,9 @@
 #include <stdlib.h>  // For memory management and other general functions.
 #include <ctype.h>   // For checking and modifying characters (like letters and numbers).
 #include <string.h>  // For working with strings (copy, compare, length, etc.).
-
-// ⭐️ code by justin
+#include "recipe.h"
 
 #define RECIPES_SIZE 25
-#define ING_AMT 10  // Define max ingredient amount for recipes user adds
-#define NAME_SIZE 50
-#define ING_SIZE 50
-
-
-struct Ingredient {
-    char name[50];
-    int amount;
-};
-
-struct Recipe {
-    char name[100];
-    struct Ingredient ingredients[ING_AMT];
-    int ingCount;
-};
-
-// ⭐️ end of code by justin
 
 int main() {
     int choice;
