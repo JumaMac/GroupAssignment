@@ -2,6 +2,27 @@
 #include "recipe.h"
 #define RECIPES_SIZE 25
 
+void viewRecipes(struct Recipe recipes[], int recipeCount);
+
+void viewRecipes(struct Recipe recipes[], int recipeCount) {
+
+    if (recipeCount == 0) {
+        printf("No available recipes.");
+
+    } else {
+        // print out the recipes that were inputted outputting the names and ingredients being used
+        printf("Recipes: \n");
+        for (int i = 0; i < recipeCount; i++) {
+            printf("Recipe %d: \n", i + 1);
+            printf("Name: %s\n", recipes[i].name);
+            printf("Ingredients: \n");
+            for (int j = 0; j < recipes[i].ingCount; j++) {
+                printf(" -%s: %dg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
+            }
+        }
+    }
+}
+
 int main(void) {
 
     struct Recipe recipes[RECIPES_SIZE];
@@ -46,22 +67,7 @@ int main(void) {
             printf("Recipe has been added\n");
            
         } else if (choice == 2) {
-
-            if (recipeCount == 0) {
-                printf("No available recipes.");
-                continue;
-            } else {
-                // print out the recipes that were inputted outputting the names and ingredients being used
-                printf("Recipes: \n");
-                for (int i = 0; i < recipeCount; i++) {
-                    printf("Recipe %d: \n", i + 1);
-                    printf("Name: %s\n", recipes[i].name);
-                    printf("Ingredients: \n");
-                    for (int j = 0; j < recipes[i].ingCount; j++) {
-                        printf(" -%s: %dg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
-                    }
-                }
-            }
+            viewRecipes(recipes, recipeCount);
         } else if (choice == 3) {
             printf("Exiting Software..\n");
             break;
