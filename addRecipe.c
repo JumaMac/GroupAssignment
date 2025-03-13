@@ -3,12 +3,14 @@
 #define RECIPES_SIZE 25
 
 void viewRecipes(struct Recipe recipes[], int recipeCount);
+void editRecipes(struct Recipe recipes[], int recipeCount);
 
 void viewRecipes(struct Recipe recipes[], int recipeCount) {
 
     if (recipeCount == 0) {
-        printf("No available recipes.");
-
+        printf("No available recipes.\n");
+        return;
+        
     } else {
         // print out the recipes that were inputted outputting the names and ingredients being used
         printf("Recipes: \n");
@@ -23,6 +25,28 @@ void viewRecipes(struct Recipe recipes[], int recipeCount) {
     }
 }
 
+void editRecipes(struct Recipe recipes[], int recipeCount) {
+    int recipeIndex;
+    char newName[50];
+    if (recipeCount == 0) {
+        printf("No recipes to update\n");
+        return;
+    }
+
+    printf("Recipes");
+    for (int i = 0; i < recipeCount; i++) {
+        printf("%d. %S\n", i + 1, recipes[i].name);
+    }
+
+    printf("Enter recipe # to update (1-%d)\n", recipeCount);
+    scanf("%d", &recipeIndex);
+
+    if (recipeIndex != recipeCount) {
+        printf("Invalid Choice\n");
+        return; 
+    }
+}
+
 int main(void) {
 
     struct Recipe recipes[RECIPES_SIZE];
@@ -33,7 +57,8 @@ int main(void) {
         // initial display 
         printf("1. Add Recipe\n");
         printf("2. View Recipe\n");
-        printf("3. Exit\n");
+        printf("3. Edit Recipes\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -69,6 +94,8 @@ int main(void) {
         } else if (choice == 2) {
             viewRecipes(recipes, recipeCount);
         } else if (choice == 3) {
+            editRecipes(recipes, recipeCount);
+        } else if (choice == 4) {
             printf("Exiting Software..\n");
             break;
         } else {
