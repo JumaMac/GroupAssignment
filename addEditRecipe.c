@@ -10,7 +10,7 @@ void viewRecipes(struct Recipe recipes[], int recipeCount) {
     if (recipeCount == 0) {
         printf("No available recipes.\n");
         return;
-        
+
     } else {
         // print out the recipes that were inputted outputting the names and ingredients being used
         printf("Recipes: \n");
@@ -26,26 +26,51 @@ void viewRecipes(struct Recipe recipes[], int recipeCount) {
 }
 
 void editRecipes(struct Recipe recipes[], int recipeCount) {
-    int recipeIndex;
+    int recipeIndex, ingIndex, newIngAmt;
     char newName[50];
+
     if (recipeCount == 0) {
         printf("No recipes to update\n");
         return;
     }
 
-    printf("Recipes");
+    printf("Recipes\n");
     for (int i = 0; i < recipeCount; i++) {
-        printf("%d. %S\n", i + 1, recipes[i].name);
+        printf("%d. %s\n", i + 1, recipes[i].name);
     }
 
     printf("Enter recipe # to update (1-%d)\n", recipeCount);
+    printf("Enter your choice: ");
     scanf("%d", &recipeIndex);
 
-    if (recipeIndex != recipeCount) {
+    if (recipeCount < recipeIndex) {
         printf("Invalid Choice\n");
         return; 
     }
+    
+    recipeIndex--; // decerement recipeIndex to map users input to array index at 0 - recipeCount
+    
+    printf("Ingredients in %s:\n", recipes[recipeIndex].name);
+    for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
+        printf("%d. %s: %dg\n", i + 1, recipes[recipeIndex].ingredients[i].name, recipes[recipeIndex].ingredients[i].amount);
+    }
+
+    printf("Enter ingredient # to update (1-%d): ", recipes[recipeIndex].ingCount);
+    scanf("%d", &ingIndex);
+
+    ingIndex--;
+
+    printf("Enter new ingredient name: ");
+    scanf(" %[^\n]", recipes[recipeIndex].ingredients[ingIndex].name);
+   
+    printf("Enter new amount for %s: ", recipes[recipeIndex].ingredients[ingIndex].name);
+    scanf("%d", &newIngAmt);
+
+    recipes[recipeIndex].ingredients[ingIndex].amount = newIngAmt;
+    
+    printf("Ingredient updated successfully.\n");
 }
+    
 
 int main(void) {
 
@@ -83,7 +108,7 @@ int main(void) {
             for (int i = 0; i < ingNum; i++) { // depending on the entered amount of ingredients being used, it takes that many inputs storing the data in recipes array
                 printf("Enter ingredient %d name: ", i + 1);
                 scanf(" %[^\n]", recipes[recipeCount].ingredients[i].name);
-                printf("Enter amount of %s(g): ", recipes[recipeCount].ingredients[i].name);
+                printf("Enter amount of %s: ", recipes[recipeCount].ingredients[i].name);
                 scanf("%d", &recipes[recipeCount].ingredients[i].amount);
             }
 
