@@ -16,7 +16,7 @@ int initRecipes(struct Recipe recipes[])
     // adding a category for recipe 1
     recipes[0].category = 5;
     // adding ingredient count for recipe 1
-    recipes[0].ingCount = 9;
+    recipes[0].ingCount = 7;
     // adding ingredient 1 name
     strcpy(recipes[0].ingredients[0].name, "Whole Grain Seeded");
     // adding ingredient 1 amount

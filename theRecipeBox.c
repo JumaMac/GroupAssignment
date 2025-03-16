@@ -82,6 +82,8 @@ int main()
             {
                 printf("\n[1] Add Recipe\n");
                 printf("[2] View Recipes\n");
+                printf("[3] Edit Recipes\n");
+                printf("[4] Delete Recipes\n");
                 printf("[0] Go Back\n");
                 printf("Enter your choice: ");
 
@@ -91,62 +93,25 @@ int main()
                     continue;
                 }
 
-                if (choice == 0)
+                if (choice == 1)
                 {
-                    break; // Go back to the main menu
-                }
-                else if (choice == 1)
+                    addRecipes(recipes, &recipeCount);
+                } 
+                else if (choice == 2) 
                 {
-                    if (recipeCount >= RECIPES_SIZE)
-                    {
-                        printf("Maximum amount of recipes reached.\n");
-                        continue;
-                    }
-
-                    printf("Enter recipe name: ");
-                    scanf(" %[^\n]", recipes[recipeCount].name);
-
-                    printf("How many ingredients will you be using? (Max %d): ", ING_AMT);
-                    scanf("%d", &ingNum);
-
-                    if (ingNum > ING_AMT)
-                    {
-                        printf("Too many ingredients used.\n");
-                        continue;
-                    }
-
-                    for (int i = 0; i < ingNum; i++)
-                    {
-                        printf("Enter ingredient %d name: ", i + 1);
-                        scanf(" %[^\n]", recipes[recipeCount].ingredients[i].name);
-                        printf("Enter amount of %s (g): ", recipes[recipeCount].ingredients[i].name);
-                        scanf("%d", &recipes[recipeCount].ingredients[i].amount);
-                    }
-
-                    recipes[recipeCount].ingCount = ingNum;
-                    printf("Recipe has been added!\n");
-                    recipeCount++;
-                }
-                else if (choice == 2)
+                    viewRecipes(recipes, recipeCount);
+                } 
+                else if (choice == 3) 
                 {
-                    if (recipeCount == 0)
-                    {
-                        printf("No available recipes.\n");
-                    }
-                    else
-                    {
-                        printf("Recipes:\n");
-                        for (int i = 0; i < recipeCount; i++)
-                        {
-                            printf("Recipe %d: \n", i + 1);
-                            printf("Name: %s\n", recipes[i].name);
-                            printf("Ingredients: \n");
-                            for (int j = 0; j < recipes[i].ingCount; j++)
-                            {
-                                printf(" - %s: %dg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
-                            }
-                        }
-                    }
+                    editRecipes(recipes, &recipeCount);
+                } 
+                else if (choice == 4) 
+                {
+                    deleteRecipes(recipes, &recipeCount);
+                } 
+                else if (choice == 0)
+                {
+                    break;
                 }
                 else
                 {
