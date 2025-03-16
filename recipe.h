@@ -31,6 +31,7 @@ void viewRecipes(struct Recipe recipes[], int recipeCount);
 void addRecipes(struct Recipe recipes[], int *recipeCount);
 void editRecipes(struct Recipe recipes[], int *recipeCount);
 void deleteRecipes(struct Recipe recipe[], int *recipeCount);
+void searchRecipe(struct Recipe recipes[], int recipeCount);
 
 
 void viewRecipes(struct Recipe recipes[], int recipeCount) {
@@ -181,6 +182,35 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
     (*recipeCount)--;
 
     printf("Recipe deleted successfully.\n");
+}
+
+void searchRecipe(struct Recipe recipes[], int recipeCount) {
+
+    char searchName[50];
+    printf("Enter recipe name to search: ");
+    scanf(" %[^\n]", searchName); // recipes have spaces so must use %[^\n]
+    // defining a variable found to false to set to true if the recipe is found
+    int found = 0;
+    for (int i = 0; i < recipeCount; i++) {
+        // comparing recipes name within the array to the user input of searchName, 0 means the strings are identical
+        // when searching case sensitivity matters, must match exact strings
+        if (strcmp(recipes[i].name, searchName) == 0) {
+            printf("\nRecipe found\n");
+            printf("\nRecipe Name: %s\n", recipes[i].name);
+            printf("Ingredients:\n");
+            for (int j = 0; j < recipes[i].ingCount; j++) {
+                printf(" - %s: %.2fg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
+            }
+            // found is set to true when a match has been found
+            found = 1;
+            // stop searching after finding the first match
+            break; 
+        }
+    }
+
+    if (!found) {
+        printf("\nRecipe not found.\n");
+    }
 }
 
 // ⭐️ end of code by Justin

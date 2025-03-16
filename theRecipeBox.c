@@ -84,6 +84,7 @@ int main()
                 printf("[2] View Recipes\n");
                 printf("[3] Edit Recipes\n");
                 printf("[4] Delete Recipes\n");
+                printf("[5] Search Recipes\n");
                 printf("[0] Go Back\n");
                 printf("Enter your choice: ");
 
@@ -108,6 +109,10 @@ int main()
                 else if (choice == 4) 
                 {
                     deleteRecipes(recipes, &recipeCount);
+                }
+                else if (choice == 5) 
+                {
+                    searchRecipe(recipes, recipeCount);
                 } 
                 else if (choice == 0)
                 {
