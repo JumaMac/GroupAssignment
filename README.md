@@ -1,7 +1,9 @@
-**MEOW-NSTER : Eats it all!**
+# MEOW-NSTER : Eats it all!
 
 Meow-nster is a game featuring an ever hungry cat. It gulps down everything coming it's way!
+
 It's a fun addition to **The Recipe Box**, play a fun game as your food cooks!
+
 _-made by Jaismin_
 
 Following is a demo video: 
