@@ -87,7 +87,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
         printf("Enter ingredient %d name: ", i + 1);
         scanf(" %[^\n]", &recipes[*recipeCount].ingredients[i].name);
         printf("Enter amount of %s: ", recipes[*recipeCount].ingredients[i].name);
-        scanf("%.2f", &recipes[*recipeCount].ingredients[i].amount);
+        scanf("%f", &recipes[*recipeCount].ingredients[i].amount);
     }
 
      // setting ingCount within the recipes array to what was set as the amount of ingredients used
