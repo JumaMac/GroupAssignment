@@ -2,14 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h> 
 
-// // Forward declaration of Food structure
-// typedef struct Food Food;
-
-// Structure for the falling food
+// structure for the falling food items
 typedef struct {
     float x, y;
     bool active;
-    int textureIndex;  // To keep track of which texture is being used
+    int textureIndex;  // which image is being used for the food
 } Food;
 
 // Function declarations
@@ -23,18 +20,15 @@ void UpdateMovement(float *spritePosX, int frameWidth, float scaleFactor);
 void UpdateAnimation(int *currentFrame, int *frameCounter, int frameSpeed, int totalFrames);
 bool CheckCollision(float spritePosX, float spritePosY, int spriteWidth, int spriteHeight, Food food, int foodWidth, int foodHeight);
 
-// Structure for the falling food
-struct Food {
-    float x, y;
-    bool active;
-    int textureIndex;  // To keep track of which texture is being used
-};
 
+//main function
 int main() {
+    //variable declaration
     const int screenWidth = 1000;
     const int screenHeight = 600;
     bool gameStarted = false;
     bool soundOn = true;
+    int score = 0;  // Score variable
 
     // initialize the window and audio devie
     InitWindow(screenWidth, screenHeight, "Meow-nster: Eats it all!");
@@ -48,10 +42,8 @@ int main() {
     Texture2D popcat = LoadTexture("assets/popcat_spritesheet.png"); //this is a spritesheet
     Music music = LoadMusicStream("assets/music.mp3"); //source: "Cats" by The Living Tombstone (2023)
 
-    int score = 0;  // Score variable
-
-    // Load multiple food textures
-    Texture2D foodTextures[11]; // Array to store 10 textures
+    // load array of food images
+    Texture2D foodTextures[11]; // Array to store 11 textures
     foodTextures[0] = LoadTexture("assets/food/cake_strawberry.png");
     foodTextures[1] = LoadTexture("assets/food/fruit_banana.png");  
     foodTextures[2] = LoadTexture("assets/food/fruit_apple.png");  
@@ -65,11 +57,10 @@ int main() {
     foodTextures[10] = LoadTexture("assets/food/icecream.png");
 
 
-
-    // Initialize the food
-    Food food = {GetRandomValue(50, 950), -50, true, 0};  // Random texture index will be assigned later
+    // initialize the food
+    Food food = {GetRandomValue(50, 950), -50, true, 0};  
     float fallSpeed = 0.15f; 
-    float foodScaleFactor = 3.0f;
+    float foodScaleFactor = 3.0f; //scaling images to desired size
 
     // so that hover of buttons is not blocky
     SetTextureFilter(startButton, TEXTURE_FILTER_BILINEAR);
@@ -84,13 +75,12 @@ int main() {
     Rectangle startButtonRect = {300, 245, startButton.width, startButton.height};
     Rectangle soundButtonRect = {930, 20, soundButton.width, soundButton.height};
 
-
     // variables for spritesheet animation
-    int totalFrames = 6;  // Number of frames in the sprite sheet
+    int totalFrames = 6;  // number of frames in the sprite sheet
     int frameWidth = popcat.width / totalFrames;
     int frameHeight = popcat.height;
-    int currentFrame = 0, frameCounter = 0, frameSpeed = 250;  // Speed of frame update
-    float spritePosX = 30.0f, spritePosY = 460.0f, scaleFactor = 0.3f;
+    int currentFrame = 0, frameCounter = 0, frameSpeed = 250;  // frame rate
+    float spritePosX = 30.0f, spritePosY = 460.0f, scaleFactor = 0.3f; //starting position of the cat and scaling the image
 
     while (!WindowShouldClose()) { // Game loop runs forever
 
@@ -172,7 +162,7 @@ int main() {
             food.y = -50;  // Reset food position
             food.x = GetRandomValue(50, GetScreenWidth() - 50);
             food.textureIndex = GetRandomValue(0, 10);  // Randomly choose a texture (0-10)
-        }
+        } 
     }
         DrawSprite(popcat, frameWidth, frameHeight, currentFrame, spritePosX, spritePosY, scaleFactor);
         EndDrawing();
