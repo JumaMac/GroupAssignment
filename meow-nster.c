@@ -20,7 +20,6 @@ void UpdateMovement(float *spritePosX, int frameWidth, float scaleFactor);
 void UpdateAnimation(int *currentFrame, int *frameCounter, int frameSpeed, int totalFrames);
 bool CheckCollision(float spritePosX, float spritePosY, int spriteWidth, int spriteHeight, Food food, int foodWidth, int foodHeight);
 
-
 //main function
 int main() {
     //variable declaration
