@@ -12,7 +12,7 @@
 // ⭐️ start of code by Justin
 struct Ingredient {
     char name[ING_SIZE];
-    float amount; 
+     float amount;
 
 
 };
@@ -21,9 +21,11 @@ struct Recipe {
     int category;
     char name[NAME_SIZE];
     struct Ingredient ingredients[ING_AMT]; //struct of ingredients so i can loop through the amount and name separately from the recipe
+    struct AdjustedValues;
     int ingCount; //ingredient count needed so each recipe could have differing amounts of ingredients
     char instructions[INSTRUCT_SIZE]; //defining instructions to be added in database.h - THOMAS 
-
+    int servings;
+    float newAMT;
 };
 
 
@@ -214,3 +216,21 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
 }
 
 // ⭐️ end of code by Justin
+
+void adjustIngredients(struct Recipe* recipe, int newServings) {
+    if (newServings <= 0) {
+        printf("Enter the number of servings: ");
+        scanf("%d", &newServings);
+        printf("Invalid number of servings.\n");
+        return;
+    }
+    float factor = (float)newServings / recipe->servings; // Calculate adjustment factor
+
+    for (int i = 0; i < recipe->ingCount; i++) {
+        recipe->ingredients[i].amount *= factor; // Adjust amount
+    }
+
+    recipe->servings = newServings;  // Update servings count
+}
+
+// ⭐️ end of code by Mikey 

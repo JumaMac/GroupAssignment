@@ -68,7 +68,7 @@ int initRecipes(struct Recipe recipes[])
     // adding ingredient 3
     strcpy(recipes[1].ingredients[2].name, "Soup");
     // adding amount 3
-    recipes[1].ingredients[2].amount = 9;
+    recipes[1].ingredients[2].amount = 5;
 
     // returning 2 for 2 recipe
     // Function is called in recipe.c line 9.
