@@ -1,3 +1,5 @@
+//Code by Thomas
+
 #include "recipe.h"
 #include <stdio.h>
 

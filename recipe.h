@@ -1,3 +1,5 @@
+// ⭐️ start of code by Justin
+
 #pragma once
 #define NAME_SIZE 50
 #define ING_SIZE 50
@@ -8,8 +10,6 @@
 
 
 
-
-// ⭐️ start of code by Justin
 struct Ingredient {
     char name[ING_SIZE];
      float amount;
@@ -216,6 +216,8 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
 }
 
 // ⭐️ end of code by Justin
+
+// ⭐️ start of code by Mikey
 
 void adjustIngredients(struct Recipe* recipe, int newServings) {
     if (newServings <= 0) {
