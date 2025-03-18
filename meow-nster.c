@@ -1,3 +1,5 @@
+// ⭐️ code by JAISMIN
+
 #include "raylib.h"
 #include <stdio.h>
 #include <stdlib.h> 
@@ -19,7 +21,6 @@ void UpdateFood(Food *food, float *fallSpeed, int screenHeight, int score);
 void UpdateMovement(float *spritePosX, int frameWidth, float scaleFactor);
 void UpdateAnimation(int *currentFrame, int *frameCounter, int frameSpeed, int totalFrames);
 bool CheckCollision(float spritePosX, float spritePosY, int spriteWidth, int spriteHeight, Food food, int foodWidth, int foodHeight);
-
 
 //main function
 int main() {
@@ -77,7 +78,7 @@ int main() {
 
     // variables for spritesheet animation
     int totalFrames = 6;  // number of frames in the sprite sheet
-    int frameWidth = popcat.width / totalFrames;
+    int frameWidth = popcat.width / totalFrames; //setting width of frame, that is 1/6 width of the spritehseet
     int frameHeight = popcat.height;
     int currentFrame = 0, frameCounter = 0, frameSpeed = 250;  // frame rate
     float spritePosX = 30.0f, spritePosY = 460.0f, scaleFactor = 0.3f; //starting position of the cat and scaling the image
@@ -108,12 +109,11 @@ int main() {
                                            soundButtonRect.y + soundButtonRect.height / 2 - soundButton.height * scaleSound / 2};
             DrawTextureEx(soundButton, soundButtonPosition, 0.0f, scaleSound, WHITE);          
 
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) { //if mouse button is pressed we check if user pressed the sound button
             if (CheckCollisionPointRec(GetMousePosition(), soundButtonRect)) {
-                // Toggle the sound state
+                // Toggle the sound on and off
                 soundOn = !soundOn;
 
-                // Load the appropriate sound button texture based on the state
                 if (soundOn) {
                     // Load the sound-on button texture
                     soundButton = LoadTexture("assets/homepage/sound-on-button.png");
@@ -128,12 +128,11 @@ int main() {
 
             
     if (!gameStarted) {
-    
+    //this is the homepage
+        
     // Draw the logo, start button, and sound button
     DrawTexture(logo, 100, 20, WHITE);
     DrawHomePageFood(foodTextures, 11, 3.0f, 130.0f, 195.0f, 22.0f);
-
-
 
             // draw start button with scaling effect
             Vector2 startButtonPosition = {startButtonRect.x + startButtonRect.width / 2 - startButton.width * scaleStart / 2, 
@@ -150,15 +149,15 @@ int main() {
 
         UpdateFood(&food, &fallSpeed, GetScreenHeight(), score);
 
-        // Get the actual food size based on texture
         int foodWidth = foodTextures[food.textureIndex].width * foodScaleFactor;
         int foodHeight = foodTextures[food.textureIndex].height * foodScaleFactor;
 
         DrawFood(foodTextures, food, foodScaleFactor);  // Drawing the selected food
         DrawText(TextFormat("Score: %d", score), 20, 20, 30, WHITE);
-        // Check for collision with adjusted hitbox
+        
+        // Check for collision bw cat and food item
         if (CheckCollision(spritePosX, spritePosY, frameWidth * scaleFactor, frameHeight * scaleFactor, food, foodWidth, foodHeight)) {
-            score++;  // Increase score
+            score++;  // increment score
             food.y = -50;  // Reset food position
             food.x = GetRandomValue(50, GetScreenWidth() - 50);
             food.textureIndex = GetRandomValue(0, 10);  // Randomly choose a texture (0-10)
@@ -206,7 +205,7 @@ void scaleWhenHover(Rectangle startButtonRect, Rectangle soundButtonRect, float 
     }
 }
 
-// Function to draw the sprite
+// function to draw the cat sprite
 void DrawSprite(Texture2D texture, int frameWidth, int frameHeight, int currentFrame, float spritePosX, float spritePosY, float scaleFactor) {
     Rectangle sourceRec = { frameWidth * currentFrame, 0.0f, frameWidth, frameHeight };
     Rectangle destRec = { spritePosX, spritePosY, frameWidth * scaleFactor, frameHeight * scaleFactor };
@@ -222,7 +221,7 @@ void UpdateAnimation(int *currentFrame, int *frameCounter, int frameSpeed, int t
     }
 }
 
-// Function to draw the food
+// function to draw the food
 void DrawFood(Texture2D textures[], Food food, float scaleFactor) {
     if (food.active) {
         // Draw the food based on the textureIndex
@@ -243,11 +242,11 @@ void UpdateFood(Food *food, float *fallSpeed, int screenHeight, int score) {
         }
     }
 
-    // Increase fall speed every 10 points
+    // Increase fall speed every 10 points, 0.15 is base speed
     *fallSpeed = 0.15f + (score / 10) * 0.02f;
 }
 
-// Function to update sprite movement
+// Function for user controls and moving the character 
 void UpdateMovement(float *spritePosX, int frameWidth, float scaleFactor) {
     float spriteWidth = frameWidth * scaleFactor;  
     float screenWidth = GetScreenWidth();  
@@ -264,7 +263,7 @@ void UpdateMovement(float *spritePosX, int frameWidth, float scaleFactor) {
 bool CheckCollision(float spritePosX, float spritePosY, int spriteWidth, int spriteHeight, Food food, int foodWidth, int foodHeight) {
     Rectangle catRect = { spritePosX, spritePosY, spriteWidth, spriteHeight };
 
-    // Adjusted food collision box (removes transparent space)
+    // this is the food collision box
     Rectangle foodRect = { food.x + 10, food.y + 10, foodWidth - 20, foodHeight - 20 };
 
     return CheckCollisionRecs(catRect, foodRect);
@@ -272,13 +271,12 @@ bool CheckCollision(float spritePosX, float spritePosY, int spriteWidth, int spr
 
 // Function to draw all food textures with a given scale and position
 void DrawHomePageFood (Texture2D foodTextures[], int numTextures, float scaleFactor, float startX, float startY, float gapX) {
-    // Loop through the textures array and draw each one
+    // Loop through the textures array and draw
     for (int i = 0; i < numTextures; i++) {
         // Calculate the X position for each food item based on the index and the gap
         float posX = startX + (i * (foodTextures[i].width * scaleFactor + gapX));
 
-        // Draw the food texture at the calculated position with the given scale factor
-        DrawTextureEx(foodTextures[i], (Vector2){ posX, startY }, 0.0f, scaleFactor, WHITE);  // Y-position is constant (startY)
+        // Draw the food image at the calculated position with the given scale factor
+        DrawTextureEx(foodTextures[i], (Vector2){ posX, startY }, 0.0f, scaleFactor, WHITE);  // Y-position is constant 
     }
 }
-
