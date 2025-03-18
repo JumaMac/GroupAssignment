@@ -221,7 +221,9 @@ int main()
             // ⭐️ code by jaismin
         case 3: // Game Section
         {
-            printf("Play fun games here as your food cooks! (Feature Coming Soon)\n");
+            printf("[1] Meow-nster: Eats it all!\n");
+            printf("The game is not incorporated with the main code yet, but you can go check it out on https://github.com/JumaMac/GroupAssignment/blob/main/meow-nster.c\n");
+            printf("Or view a demo video of it running on https://github.com/user-attachments/assets/fb11ec3d-6e46-4b2d-97be-d74a06217c62\n");
             printf("Press Enter to go back to the home page...\n");
 
             // Wait for user input to go back to the home page
