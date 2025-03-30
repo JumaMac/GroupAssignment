@@ -13,6 +13,7 @@ int main()
     // call the initRecipes from database.h to load all recipes
     int recipeCount = initRecipes(recipes);
     int ingNum;
+    loadRecipesFromFile(recipes, &recipeCount);
 
     // ⭐️ code by Jaismin
     while (1)
