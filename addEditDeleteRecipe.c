@@ -151,7 +151,7 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     
     printf("Ingredient updated successfully.\n");
     
-    // NEW: Save recipes to file after editing
+    // save recipes to file after editing
     saveRecipesToFile(recipes, *recipeCount);
 }
 // pointer used for recipeCount again as we want any changes to the count to be reflected within the main function
@@ -228,7 +228,7 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
         printf("Error opening file for writing.\n");
         return;
     }
-
+    // loop through recipes array to take information needed to write to text file
     for (int i = 0; i < recipeCount; i++) {
         fprintf(file, "Recipe Name: %s\n", recipes[i].name);
         fprintf(file, "Ingredients:\n");
@@ -238,7 +238,7 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
         }
 
         fprintf(file, "Instructions:\n%s\n", recipes[i].instructions);
-        fprintf(file, "-------------------------------\n");  // Separator for readability
+        fprintf(file, "-------------------------------\n");  // separator for readability
     }
 
     fclose(file);
