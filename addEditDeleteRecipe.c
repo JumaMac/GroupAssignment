@@ -62,11 +62,13 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
      // setting ingCount within the recipes array to what was set as the amount of ingredients used
     recipes[*recipeCount].ingCount = ingNum;
 
-
+    // enter instructions here
     printf("Enter instructions (press Enter twice to finish):\n");
 
+    //variable to keep track of counter 
     int i = 0;
     int newlines = 0;
+    // variable to store characters from user input
     char c;
     
     while (i < INSTRUCT_SIZE - 1) {
@@ -186,7 +188,7 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
 
     printf("Recipe deleted successfully.\n");
     
-    // NEW: Save recipes to file after deleting
+    // save recipes to file after deleting
     saveRecipesToFile(recipes, *recipeCount);
 }
 
