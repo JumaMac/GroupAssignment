@@ -34,24 +34,5 @@ void deleteRecipes(struct Recipe recipe[], int *recipeCount);
 void searchRecipe(struct Recipe recipes[], int recipeCount);
 void saveRecipesToFile(struct Recipe recipes[], int recipeCount);
 void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount);
+void adjustIngredients(struct Recipe recipes[], int *recipeCount); //⭐️ added by Mikey
 
-
-// ⭐️ start of code by Mikey
-
-// void adjustIngredients(struct Recipe* recipe, int newServings) {
-//     if (newServings <= 0) {
-//         printf("Enter the number of servings: ");
-//         scanf("%d", &newServings);
-//         printf("Invalid number of servings.\n");
-//         return;
-//     }
-//     float factor = (float)newServings / recipe->servings; // Calculate adjustment factor
-
-//     for (int i = 0; i < recipe->ingCount; i++) {
-//         recipe->ingredients[i].amount *= factor; // Adjust amount
-//     }
-
-//     recipe->servings = newServings;  // Update servings count
-// }
-
-// ⭐️ end of code by Mikey 

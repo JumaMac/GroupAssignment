@@ -333,3 +333,55 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
     printf("Loaded %d recipes from file.\n", *recipeCount);
 }
 // ⭐️ end of code by Justin
+
+// ⭐️ start of code by Mikey
+void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
+    float adjustedIngAmt;
+    int recipeIndex;
+    int servings;
+
+    if (*recipeCount == 0) {
+        printf("No recipes to update\n");
+        return;
+    }
+    // View numbered list of recipe names before adjusting
+    printf("Recipes\n");
+    
+    for (int i = 0; i < *recipeCount; i++) {
+        printf("%d. %s\n", i + 1, recipes[i].name);
+    }
+    // allow user to choose recipe by its number on the list of recipes
+    printf("Enter recipe # to adjust (1-%d)\n", *recipeCount);
+    printf("Enter your choice: ");
+    scanf("%d", &recipeIndex);
+    // user input is set as the recipes index
+    if (recipeIndex < 1 || recipeIndex > *recipeCount) {
+        printf("Invalid Choice\n");
+        return;
+    }
+    // decerement recipeIndex to map users input to array index at recipeCount - 1, in other words 1 = 0 (where 1 is user input and 0 is the index at that choice)
+    recipeIndex--; 
+    
+    printf("How many servings would you like to make?: ");
+    scanf("%d", &servings);
+
+    if (servings < 1) {
+        printf("\nThat's not enough servings!\n");
+        return;
+    } else if (servings > 100) {
+        printf("\nYou sure you want that many?\n");
+        return;
+    } 
+    
+    //loops through the array of ingredients in the recipe selected and adjusts based on servings inputted by user
+    for(int i = 0; i < recipes[recipeIndex].ingCount; i++) {
+        recipes[recipeIndex].ingredients[i].amount *= (float)servings;
+    }
+
+    //display adjusted ingredient amounts
+    printf("Here are the adjusted ingredient amounts for %d serving(s)\n", servings);
+    for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
+        printf(" - %s: %.2f\n", recipes[recipeIndex].ingredients->name, recipes[recipeIndex].ingredients->amount);
+    }
+}
+// ⭐️ end of code by Mikey

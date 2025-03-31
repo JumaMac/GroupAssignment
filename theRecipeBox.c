@@ -179,6 +179,7 @@ int main()
                 printf("[3] Edit Recipes\n");
                 printf("[4] Delete Recipes\n");
                 printf("[5] Search Recipes\n");
+                printf("[6] Adjust a Recipe\n");
                 printf("[0] Go Back\n");
                 printf("Enter your choice: ");
 
@@ -208,6 +209,12 @@ int main()
                 {
                     searchRecipe(recipes, recipeCount);
                 } 
+                //⭐️ Added by Mikey
+                else if (choice == 6) 
+                {
+                    adjustIngredients(recipes, &recipeCount);
+                }
+                //⭐️
                 else if (choice == 0)
                 {
                     break;
