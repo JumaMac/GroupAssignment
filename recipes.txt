@@ -1,8 +1,9 @@
-Recipe Name: Curry
+Recipe Name: French Onion Soup
 Ingredients:
-- Potatoes: 3.00
-- Carrots: 2.00
+- French: 20.00
+- Onion: 30.00
+- Soup: 50.00
 Instructions:
 
-Yesss
+1. Mix and cook
 -------------------------------
