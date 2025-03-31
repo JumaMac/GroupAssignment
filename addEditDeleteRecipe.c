@@ -21,7 +21,7 @@ void viewRecipes(struct Recipe recipes[], int recipeCount) {
                 printf(" -%s: %.2fg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
             }
             printf("Instructions: \n");
-            printf("%s", recipes[i].instructions);
+            printf("%s\n", recipes[i].instructions);
         }
     }
 }
@@ -32,7 +32,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
     int ingNum;
 
      // error handling if more than the required recipes are added
-    if (*recipeCount > RECIPES_SIZE){
+    if (*recipeCount >= RECIPES_SIZE){
         printf("Maximum amount of recipes reached");
         // needed the program to keep running even when an error is hit
         return; 
@@ -67,6 +67,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
 
     //variable to keep track of counter 
     int i = 0;
+    // variable to store newLines when user inputs enter
     int newlines = 0;
     // variable to store characters from user input
     char c;
@@ -77,7 +78,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
         if (c == '\n') {
             newlines++;
             if (newlines == 2) {
-                i--; // Remove the last newline
+                i--;
                 break;
             }
         } else {
@@ -145,7 +146,10 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     scanf(" %[^\n]", recipes[recipeIndex].ingredients[ingIndex].name);
     // user inputs new ingredient amount set to the variable newIngAmt
     printf("Enter new amount for %s: ", recipes[recipeIndex].ingredients[ingIndex].name);
-    scanf("%f", &newIngAmt);
+    if (scanf("%f", &newIngAmt) != 1 ) {
+        printf("Invalid input.\n");
+        return;
+    } 
     // the amount within the ing struct is set to the new value that was entered by the user
     recipes[recipeIndex].ingredients[ingIndex].amount = newIngAmt;
     
@@ -221,60 +225,111 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
     }
 }
 
+// function to save user inputted array of recipes to a text file
 void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
-    FILE *file = fopen("recipes.txt", "w");  // Open file in write mode
+    // open the file "recipes.txt" in write mode ("w")
+    FILE *file = fopen("recipes.txt", "w");
 
+    // check if the file opened successfully
     if (file == NULL) {
+        // print error message if file couldn't be opened
         printf("Error opening file for writing.\n");
-        return;
+        return;  // exit the function if there's an error
     }
-    // loop through recipes array to take information needed to write to text file
+
+    // loop through each recipe in the recipes array
     for (int i = 0; i < recipeCount; i++) {
+        // recipe name header followed by the actual name
         fprintf(file, "Recipe Name: %s\n", recipes[i].name);
+        
+        // ingredients section header
         fprintf(file, "Ingredients:\n");
 
+        // loop through each ingredient in the current recipe
         for (int j = 0; j < recipes[i].ingCount; j++) {
-            fprintf(file, "- %s: %.2f\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
+            // using the ingredient in the format: "- name: amount"
+            fprintf(file, "- %s: %.2f\n", 
+                   recipes[i].ingredients[j].name, 
+                   recipes[i].ingredients[j].amount);
         }
 
-        fprintf(file, "Instructions:\n%s\n", recipes[i].instructions);
-        fprintf(file, "-------------------------------\n");  // separator for readability
+        // Write the instructions section
+        fprintf(file, 
+            "Instructions:\n"  // instructions header
+            "%s\n"            // instructions content
+            "-------------------------------\n",  // delimiter helps separate recipes
+            recipes[i].instructions
+        );
     }
 
+    // close the file to ensure all data is written and resources freed
     fclose(file);
-    printf("Recipes saved to file successfully!\n");
+    
+    // Print success message
+    printf("Recipes book updated successfully!\n");
 }
 
-// load recipes from a text file using fscanf
+// function to load recipes from a text file into the recipes array
 void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
+    // Open the recipes file in read mode
     FILE *file = fopen("recipes.txt", "r");
+    
+    // Check if file opening failed
     if (file == NULL) {
         printf("No existing recipe file found. Starting fresh.\n");
-        return;
+        return;  // Exit function if file doesn't exist
     }
-    printf("Recipes have been loaded");
-    
+
+    // Initialize recipe count to 0 since we're starting fresh
     *recipeCount = 0;
     
-    // read recipes until array is full or EOF reached
+    // loop to read recipes until array is full or EOF reached
+    // Checks if recipecount is less than the allowed recipesize and that the recipe has a name 
     while (*recipeCount < RECIPES_SIZE && 
-           fscanf(file, " %[^\n]", recipes[*recipeCount].name) == 1) {
+           fscanf(file, "Recipe Name: %[^\n]", recipes[*recipeCount].name) == 1) {
+        // %[^\n] holds the recipe name
         
-        // read ingredient count
-        fscanf(file, "%d", &recipes[*recipeCount].ingCount);
+        // match the "Ingredients:" header line to discard
+        fscanf(file, " Ingredients:\n");
         
-        // read each ingredient's name and amount
-        for (int i = 0; i < recipes[*recipeCount].ingCount; i++) {
-            fscanf(file, " %[^\n]", recipes[*recipeCount].ingredients[i].name);
-            fscanf(file, "%f", &recipes[*recipeCount].ingredients[i].amount);
+        // initialize ingredient count for current recipe
+        recipes[*recipeCount].ingCount = 0;
+        
+        // loop to read ingredients until format doesn't match
+        while (fscanf(file, " - %[^:]: %f", 
+                     // " - " - matches hyphen and spaces
+                     // "%[^:]" - reads characters until colon (ingredient name)
+                     // ": " - matches colon and space
+        
+                     
+                     // store in current recipe's ingredients array
+                     recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].name,
+                     &recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].amount) == 2) {
+            // increment ingredient count when read is successful
+            recipes[*recipeCount].ingCount++;
+            
+            // discards newline after each ingredient line
+            fscanf(file, "\n");
         }
+
+        // read and discard the "Instructions:" header line
+        fscanf(file, " Instructions:\n");
         
-        // read instructions (using %[^\n] to read until newline)
-        fscanf(file, " %[^\n]", recipes[*recipeCount].instructions);
+        // read instructions text until first hyphen (start of delimiter)
+        // %[^-] reads all characters that are not hyphens
+        fscanf(file, " %[^-] ", recipes[*recipeCount].instructions);
         
+        // discard the delimiter line and new line
+        fscanf(file, "-------------------------------\n");
+        
+        // Move to next recipe slot in array
         (*recipeCount)++;
     }
-    
+
+    // Close the file when done
     fclose(file);
+    
+    // Print success message with number of recipes loaded
+    printf("Loaded %d recipes from file.\n", *recipeCount);
 }
 // ⭐️ end of code by Justin

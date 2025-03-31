@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "database.h": "c"
+        "database.h": "c",
+        "string.h": "c",
+        "recipe.h": "c"
     }
 }

@@ -12,8 +12,8 @@ int main()
     struct Recipe recipes[RECIPES_SIZE];
     // call the initRecipes from database.h to load all recipes
     int recipeCount = initRecipes(recipes);
-    int ingNum;
     loadRecipesFromFile(recipes, &recipeCount);
+    int ingNum;
 
     // ⭐️ code by Jaismin
     while (1)
