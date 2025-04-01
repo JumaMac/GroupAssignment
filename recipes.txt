@@ -2,8 +2,8 @@ Recipe Name: French Onion Soup
 Ingredients:
 - French: 20.00
 - Onion: 30.00
-- Soup: 50.00
+- Soup: 40.00
 Instructions:
-
 1. Mix and cook
+
 -------------------------------
