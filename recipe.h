@@ -27,7 +27,7 @@ struct Recipe {
 };
 
 
-void viewRecipes(struct Recipe recipes[], int recipeCount);
+void viewRecipes(struct Recipe recipes[], int *recipeCount);
 void addRecipes(struct Recipe recipes[], int *recipeCount);
 void editRecipes(struct Recipe recipes[], int *recipeCount);
 void deleteRecipes(struct Recipe recipe[], int *recipeCount);
