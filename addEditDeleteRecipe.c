@@ -265,8 +265,6 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
     // close the file to ensure all data is written and resources freed
     fclose(file);
     
-    // Print success message
-    printf("Recipes book updated successfully!\n");
 }
 
 // function to load recipes from a text file into the recipes array
@@ -328,9 +326,6 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
 
     // Close the file when done
     fclose(file);
-    
-    // Print success message with number of recipes loaded
-    printf("Loaded %d recipes from file.\n", *recipeCount);
 }
 // ⭐️ end of code by Justin
 
@@ -381,7 +376,7 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     //display adjusted ingredient amounts
     printf("Here are the adjusted ingredient amounts for %d serving(s)\n", servings);
     for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
-        printf(" - %s: %.2f\n", recipes[recipeIndex].ingredients->name, recipes[recipeIndex].ingredients->amount);
+        printf(" - %s: %.2f\n", recipes[recipeIndex].ingredients[i].name, recipes[recipeIndex].ingredients[i].amount);
     }
 }
 // ⭐️ end of code by Mikey
