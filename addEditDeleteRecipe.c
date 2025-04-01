@@ -378,5 +378,10 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
         printf(" - %s: %.2f\n", recipes[recipeIndex].ingredients[i].name, recipes[recipeIndex].ingredients[i].amount);
     }
+
+    //negates the calculation so that the values return back to how they were
+    for(int i = 0; i < recipes[recipeIndex].ingCount; i++) {
+        recipes[recipeIndex].ingredients[i].amount /= (float)servings;
+    }
 }
 // ⭐️ end of code by Mikey
