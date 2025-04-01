@@ -195,7 +195,7 @@ int main()
                 } 
                 else if (choice == 2) 
                 {
-                    viewRecipes(recipes, recipeCount);
+                    viewRecipes(recipes, &recipeCount);
                 } 
                 else if (choice == 3) 
                 {

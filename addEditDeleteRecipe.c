@@ -4,7 +4,7 @@
 
 
 // ⭐️ start of code by Justin
-void viewRecipes(struct Recipe recipes[], int recipeCount) {
+void viewRecipes(struct Recipe recipes[], int *recipeCount) {
 
     if (recipeCount == 0) {
         printf("No available recipes.\n");
@@ -12,8 +12,9 @@ void viewRecipes(struct Recipe recipes[], int recipeCount) {
 
     } else {
         // print out the recipes that were inputted outputting the names and ingredients being used
+        printf("There are currently %d recipe(s) in the book\n", *recipeCount);
         printf("Recipes: \n");
-        for (int i = 0; i < recipeCount; i++) {
+        for (int i = 0; i < *recipeCount; i++) {
             printf("Recipe %d: \n", i + 1);
             printf("Name: %s\n", recipes[i].name);
             printf("Ingredients: \n");
@@ -73,20 +74,29 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
     char c;
     
     while (i < INSTRUCT_SIZE - 1) {
+        // as long as the counter is less than instruction size minus the null terminator 
         c = getchar();
+        // read a single char from input
     
         if (c == '\n') {
+            // if the input is a new line
             newlines++;
+            //increment the counter 
             if (newlines == 2) {
+                // if user enters new line twice 
                 i--;
+                //decrement the counter
                 break;
+                // break the loop
             }
         } else {
-            newlines = 0; // Reset if non-newline character is encountered
+            newlines = 0; // reset if non-newline character is encountered
         }
     
         recipes[*recipeCount].instructions[i] = c;
+        // store input into instruction array
         i++;
+        // increment i to move to next position in the array 
     }
     
     recipes[*recipeCount].instructions[i] = '\0'; // Null-terminate the string
@@ -199,11 +209,18 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
 void searchRecipe(struct Recipe recipes[], int recipeCount) {
 
     char searchName[50];
-    printf("Enter recipe name to search: ");
-    scanf(" %[^\n]", searchName); // recipes have spaces so must use %[^\n]
-    // defining a variable found to false to set to true if the recipe is found
-    int found = 0;
-    for (int i = 0; i < recipeCount; i++) {
+    int choice;
+    printf("\n[1] Search by recipe name\n");
+    printf("[2] Search by ingredient\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+   
+    if (choice == 1) {
+        printf("Enter recipe name to search: ");
+        scanf(" %[^\n]", searchName); // recipes have spaces so must use %[^\n]
+        // defining a variable found to false to set to true if the recipe is found
+        int found = 0;
+        for (int i = 0; i < recipeCount; i++) {
         // comparing recipes name within the array to the user input of searchName, 0 means the strings are identical
         // when searching case sensitivity matters, must match exact strings
         if (strcmp(recipes[i].name, searchName) == 0) {
@@ -213,15 +230,46 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
             for (int j = 0; j < recipes[i].ingCount; j++) {
                 printf(" - %s: %.2fg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
             }
+            printf("Instructions:\n%s\n", recipes[i].instructions);
             // found is set to true when a match has been found
             found = 1;
             // stop searching after finding the first match
             break; 
         }
     }
-
     if (!found) {
         printf("\nRecipe not found.\n");
+    }
+    }
+    else if (choice == 2) {
+        printf("Enter an ingredient to search for: ");
+        scanf(" %[^\n]", searchName); // allow spaces in input
+        int found = 0;
+
+        for (int i = 0; i < recipeCount; i++) {
+            for (int j = 0; j < recipes[i].ingCount; j++) {
+                if (strcmp(recipes[i].ingredients[j].name, searchName) == 0) {
+                    if (!found) {
+                        printf("\nRecipes containing '%s':\n", searchName);
+                        found = 1;
+                    }
+                    printf("\nRecipe Name: %s\n", recipes[i].name);
+                    printf("Ingredients:\n");
+                    for (int k = 0; k < recipes[i].ingCount; k++) {
+                        printf(" - %s: %.2fg\n", recipes[i].ingredients[k].name, recipes[i].ingredients[k].amount);
+                    }            
+                    printf("Instructions:\n%s\n", recipes[i].instructions);
+                    break; // stop searching for more ingredients in the same recipe
+                }
+            }
+        }
+
+        if (!found) {
+            printf("\nNo recipes found with that ingredient.\n");
+        }
+    } 
+    else {
+        printf("Invalid choice.\n");
     }
 }
 
@@ -269,23 +317,24 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
 
 // function to load recipes from a text file into the recipes array
 void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
-    // Open the recipes file in read mode
+    // open the recipes file in read mode
     FILE *file = fopen("recipes.txt", "r");
     
-    // Check if file opening failed
+    // check if file opening failed
     if (file == NULL) {
         printf("No existing recipe file found. Starting fresh.\n");
         return;  // Exit function if file doesn't exist
     }
 
-    // Initialize recipe count to 0 since we're starting fresh
+    // Initialize recipe count to 0 
     *recipeCount = 0;
     
     // loop to read recipes until array is full or EOF reached
-    // Checks if recipecount is less than the allowed recipesize and that the recipe has a name 
+    // checks if recipecount is less than the allowed recipesize and that the recipe has a name 
     while (*recipeCount < RECIPES_SIZE && 
            fscanf(file, "Recipe Name: %[^\n]", recipes[*recipeCount].name) == 1) {
-        // %[^\n] holds the recipe name
+        // %[^\n] holds the characters for the recipe name
+        // conditions must hold true for the loop to occur
         
         // match the "Ingredients:" header line to discard
         fscanf(file, " Ingredients:\n");
@@ -306,7 +355,7 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
             // increment ingredient count when read is successful
             recipes[*recipeCount].ingCount++;
             
-            // discards newline after each ingredient line
+            // discard newline after each ingredient line
             fscanf(file, "\n");
         }
 
@@ -320,7 +369,7 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
         // discard the delimiter line and new line
         fscanf(file, "-------------------------------\n");
         
-        // Move to next recipe slot in array
+        // move to next recipe slot in array
         (*recipeCount)++;
     }
 
