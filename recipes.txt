@@ -7,3 +7,14 @@ Instructions:
 1. Mix and cook
 
 -------------------------------
+
+Recipe Name: French Toast
+Ingredients:
+- Sliced Bread: 1.00
+- Butter: 2.00
+- Cinnamon: 3.00
+Instructions:
+1. Butter the pan
+2. Cook the toast or smthn like that
+
+-------------------------------
