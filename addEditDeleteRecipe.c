@@ -178,13 +178,15 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     printf("Enter recipe # to update (1-%d)\n", *recipeCount);
     printf("Enter your choice(Press enter to go back): ");
     char firstChar;
+    // setting a variable aside if it is a new line aka enter, it will return the user to the menu
     if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
         printf("Returning to menu...\n");
         return;
     }
-    // if not, put the character back and read the full name
+    // if not, the character is put back and the whole line is read
     ungetc(firstChar, stdin);
     scanf("%d", &recipeIndex);
+    while (getchar() != '\n'); // input buffer for new line
 
     // user input is set as the recipes index
     if (recipeIndex < 1 || recipeIndex > *recipeCount) {
