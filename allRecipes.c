@@ -14,6 +14,7 @@ void display_lunch_recipes() {
     printf("\n\033[1mLunch Specials:\033[0m\n");
     printf("[1] Sun-Dried Tomato Pesto Pasta (Vegan + GF)\n");
     printf("[2] The Ultimate Salmon Burger (30 Minutes!)\n\n");
+    printf("[0] Go Back\n\n");
 }
 
 // Function to display dinner recipes
@@ -21,6 +22,7 @@ void display_dinner_recipes() {
     printf("\n\033[1mDinner Delights:\033[0m\n");
     printf("[1] Easy Shakshuka (with Fresh or Canned Tomatoes)\n");
     printf("[2] Chicken Noodle Soup (Classic or Immune-Boosting!)\n\n");
+    printf("[0] Go Back\n\n");
 }
 
 // Function to display dessert recipes
@@ -28,6 +30,7 @@ void display_dessert_recipes() {
     printf("\n\033[1mDesserts & Sweets:\033[0m\n");
     printf("[1] Homemade Gluten-Free Oreos (Vegan)\n");
     printf("[2] The BEST Chocolate Cake Mix Cookies\n\n");
+    printf("[0] Go Back\n\n");
 }
 
 // Function to display vegetarian/vegan recipes
@@ -38,6 +41,7 @@ void display_veg_vegan_recipes() {
     printf("[3] Sun-Dried Tomato Pesto Pasta (Vegan + GF)\n");
     printf("[4] Homemade Gluten-Free Oreos (Vegan)\n");
     printf("[5] The BEST Chocolate Cake Mix Cookies\n\n");
+    printf("[0] Go Back\n\n");
 }
 
 void breakfast_recipe_1(int servings) {
