@@ -32,7 +32,6 @@ void viewRecipes(struct Recipe recipes[], int *recipeCount) {
 void addRecipes(struct Recipe recipes[], int *recipeCount) {
 
     int ingNum;
-
      // error handling if more than the required recipes are added
     if (*recipeCount >= RECIPES_SIZE){
         printf("Maximum amount of recipes reached");
@@ -40,26 +39,57 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
         return; 
     }
     // Add recipes 
-    printf("Enter recipe name: ");
-    scanf(" %49[^\n]", recipes[*recipeCount].name); //  %[^\n] allows spaces to be read as strings as well, %s would break the program when adding recipe names that have spaces inbetween
+    printf("Enter recipe name(Enter to go back): ");
+    char firstChar;
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
+    scanf(" %49[^\n]", recipes[*recipeCount].name);
+    while (getchar() != '\n'); 
+    //  %[^\n] allows spaces to be read as strings as well, %s would break the program when adding recipe names that have spaces inbetween
+    
     // add number of ingredients being used
     printf("How many ingredients will you be using?(%d ingredients allowed): ", ING_AMT);
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &ingNum);
+    while (getchar() != '\n'); 
 
     // error handling if more than the specified ingredients are added
     if (ingNum > ING_AMT || ingNum <= 0) {
-        printf("Too many ingredients used"); 
+        printf("That's a questionable amount of ingredients used...going back"); 
         return;
     }
     
     // add ingredients and amount being used
     // depending on the entered amount of ingredients being used, it takes that many inputs storing the data in recipes array
     for (int i = 0; i < ingNum; i++) { 
+        //enter ingredient name, with validation for when enter is pressed
         printf("Enter ingredient %d's name: ", i + 1);
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+        ungetc(firstChar, stdin);
         scanf(" %49[^\n]", recipes[*recipeCount].ingredients[i].name);
+        while (getchar() != '\n'); 
 
+        //print amount of ingredients, with enter validation check
         printf("Enter amount of %s: ", recipes[*recipeCount].ingredients[i].name);
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+        ungetc(firstChar, stdin);
         scanf("%f", &recipes[*recipeCount].ingredients[i].amount);
+        while (getchar() != '\n'); 
 
         int unitChoice;
         printf("Select unit for %s:\n", recipes[*recipeCount].ingredients[i].name);
@@ -67,7 +97,14 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
         printf("[2] milliliters (ml)\n");
         printf("[3] ounces (oz)\n");
         printf("Enter your choice (1-3): ");
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+        // if not, put the character back and read the full name
+        ungetc(firstChar, stdin);
         scanf("%d", &unitChoice);
+        while (getchar() != '\n'); 
 
         // depending on the users choice a string is copied into the ingredients.unit array and that value 
         // is stored for that certain ingredient 
@@ -139,8 +176,16 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     }
     // allow user to choose recipe by its number on the list of recipes
     printf("Enter recipe # to update (1-%d)\n", *recipeCount);
-    printf("Enter your choice: ");
+    printf("Enter your choice(Press enter to go back): ");
+    char firstChar;
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &recipeIndex);
+
     // user input is set as the recipes index
     if (recipeIndex < 1 || recipeIndex > *recipeCount) {
         printf("Invalid Choice\n");
@@ -161,8 +206,15 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     }
 
     // user can choose specific ingredient to edit based on its index
-    printf("Enter ingredient # to update (1-%d): ", recipes[recipeIndex].ingCount);
+    printf("Enter ingredient # to update (1-%d)(Press enter to go back): ", recipes[recipeIndex].ingCount);
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &ingIndex);
+    while (getchar() != '\n'); 
     // if any invalid indexes are entered the user is given an error
     if (ingIndex < 1 || ingIndex > recipes[recipeIndex].ingCount) {
         printf("Invalid Choice\n");
@@ -171,14 +223,30 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     // similiar decrement is needed here as well since arrays are 0-based
     ingIndex--;
     // user can input a new name for ingredient, sets the value within name array of ing struct to user input at the specific index
-    printf("Enter new ingredient name: ");
+    printf("Enter new ingredient name(Press enter to go back): ");
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf(" %49[^\n]", recipes[recipeIndex].ingredients[ingIndex].name);
+    while (getchar() != '\n'); 
+
     // user inputs new ingredient amount set to the variable newIngAmt
     printf("Enter new amount for %s: ", recipes[recipeIndex].ingredients[ingIndex].name);
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
+
     if (scanf("%f", &newIngAmt) != 1 ) {
         printf("Invalid input.\n");
         return;
     } 
+    while (getchar() != '\n'); 
     // the amount within the ing struct is set to the new value that was entered by the user
     recipes[recipeIndex].ingredients[ingIndex].amount = newIngAmt;
     
@@ -202,8 +270,16 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
         printf("%d. %s\n", i + 1, recipes[i].name);
     }
     // user chooses recipe to delete based on index, input is set to recipeIndex
-    printf("Enter recipe # to delete (1-%d): ", *recipeCount);
+    printf("Enter recipe # to delete (1-%d)(Press enter to go back): ", *recipeCount);
+    char firstChar;
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &recipeIndex);
+    while (getchar() != '\n'); 
     
     if (recipeIndex < 1 || recipeIndex > *recipeCount) {
         printf("Invalid Choice\n");
@@ -232,16 +308,32 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
 void searchRecipe(struct Recipe recipes[], int recipeCount) {
 
     char searchName[50];
+    char firstChar;
     int choice;
     printf("\n[1] Search by recipe name\n");
     printf("[2] Search by ingredient\n");
-    printf("Enter your choice: ");
+    printf("Enter your choice(Press enter to go back): ");
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &choice);
+    while (getchar() != '\n'); 
    
     if (choice == 1) {
-        printf("Enter recipe name to search: ");
+        printf("Enter recipe name to search(Press enter to go back): ");
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+        // if not, put the character back and read the full name
+        ungetc(firstChar, stdin);
         scanf(" %49[^\n]", searchName); // recipes have spaces so must use %[^\n]
         // defining a variable found to false to set to true if the recipe is found
+        while (getchar() != '\n'); 
+
         int found = 0;
         for (int i = 0; i < recipeCount; i++) {
         // comparing recipes name within the array to the user input of searchName, 0 means the strings are identical
@@ -265,8 +357,16 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
     }
     }
     else if (choice == 2) {
-        printf("Enter an ingredient to search for: ");
+        printf("Enter an ingredient to search for(Press enter to go back): ");
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+    // if not, put the character back and read the full name
+        ungetc(firstChar, stdin);
         scanf(" %49[^\n]", searchName); // allow spaces in input
+        while (getchar() != '\n'); 
+
         int found = 0;
         // to access the nested ingredients struct we have to use a nested for loop 
         for (int i = 0; i < recipeCount; i++) {
@@ -408,6 +508,7 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     float adjustedIngAmt;
     int recipeIndex;
     int servings;
+    char firstChar;
 
     if (*recipeCount == 0) {
         printf("No recipes to update\n");
@@ -422,7 +523,14 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     // allow user to choose recipe by its number on the list of recipes
     printf("Enter recipe # to adjust (1-%d)\n", *recipeCount);
     printf("Enter your choice: ");
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &recipeIndex);
+    while (getchar() != '\n'); 
     // user input is set as the recipes index
     if (recipeIndex < 1 || recipeIndex > *recipeCount) {
         printf("Invalid Choice\n");
@@ -432,7 +540,14 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     recipeIndex--; 
     
     printf("How many servings would you like to make?: ");
+    if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+        printf("Returning to menu...\n");
+        return;
+    }
+    // if not, put the character back and read the full name
+    ungetc(firstChar, stdin);
     scanf("%d", &servings);
+    while (getchar() != '\n'); 
 
     if (servings < 1) {
         printf("\nThat's not enough servings!\n");

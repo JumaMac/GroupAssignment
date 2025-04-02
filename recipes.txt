@@ -13,6 +13,7 @@ Instructions:
 
 
 
+
 -------------------------------
 Recipe Name: Mushroom Avocado Toast
 Ingredients:
@@ -24,6 +25,7 @@ Instructions:
 2. Slice mushrooms and saute until tender.
 3. Mash avocado and spread on toast.
 4. Top with sauteed mushrooms.
+
 
 
 
@@ -45,6 +47,7 @@ Instructions:
 
 
 
+
 -------------------------------
 Recipe Name: Sun-Dried Tomato Pesto Pasta
 Ingredients:
@@ -56,6 +59,7 @@ Instructions:
 2. Drain and mix with pesto.
 3. Chop sun dried tomatoes and add to pasta.
 4. Toss everything together and serve.
+
 
 
 
@@ -77,6 +81,7 @@ Instructions:
 
 
 
+
 -------------------------------
 Recipe Name: Chicken Noodle Soup
 Ingredients:
@@ -88,6 +93,7 @@ Instructions:
 2. Boil broth in a large pot.
 3. Add noodles and cook until soft.
 4. Stir in shredded chicken and simmer.
+
 
 
 
@@ -109,6 +115,7 @@ Instructions:
 
 
 
+
 -------------------------------
 Recipe Name: Chocolate Cake Mix Cookies
 Ingredients:
@@ -120,6 +127,7 @@ Instructions:
 2. Shape into cookie dough balls.
 3. Bake until set.
 4. Let cool before serving.
+
 
 
 
@@ -138,11 +146,12 @@ Instructions:
 3. Eat and profit
 
 
+
 -------------------------------
 Recipe Name: Curry
 Ingredients:
-- Potatoes: 500.00g
+- Tomatoes: 1000.00g
 Instructions:
-
 1. Just do some stuff
+
 -------------------------------
