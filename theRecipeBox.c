@@ -223,6 +223,7 @@ int main()
         printf("Enter your choice: ");
 
         scanf("%d", &choice);
+        while (getchar() != '\n'); 
 
         switch (choice)
         {
@@ -356,6 +357,7 @@ int main()
             // ⭐️ code by Justin
             while (1)
             {
+                char firstChar;
                 printf("\n[1] Add Recipe\n");
                 printf("[2] View Recipes\n");
                 printf("[3] Edit Recipes\n");
@@ -364,36 +366,48 @@ int main()
                 printf("[6] Adjust a Recipe\n");
                 printf("[0] Go Back\n");
                 printf("Enter your choice: ");
+                // if enter is pressed in the menu it takes the user back to the main menu
+                if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+                    printf("Returning to main menu...\n");
+                    break;
+                }
+                ungetc(firstChar, stdin);
 
                 if (scanf("%d", &choice) != 1)
                 {
+                    while (getchar() != '\n'); //clear buffer input of new line
                     printf("Invalid input. Try again.\n");
                     continue;
                 }
-
                 if (choice == 1)
                 {
+                    while (getchar() != '\n'); 
                     addRecipes(recipes, &recipeCount);
                 } 
                 else if (choice == 2) 
                 {
+                    while (getchar() != '\n'); 
                     viewRecipes(recipes, &recipeCount);
                 } 
                 else if (choice == 3) 
                 {
+                    while (getchar() != '\n'); 
                     editRecipes(recipes, &recipeCount);
                 } 
                 else if (choice == 4) 
                 {
+                    while (getchar() != '\n'); 
                     deleteRecipes(recipes, &recipeCount);
                 }
                 else if (choice == 5) 
                 {
+                    while (getchar() != '\n'); 
                     searchRecipe(recipes, recipeCount);
                 } 
                 //⭐️ Added by Mikey
                 else if (choice == 6) 
                 {
+                    while (getchar() != '\n'); 
                     adjustIngredients(recipes, &recipeCount);
                 }
                 //⭐️

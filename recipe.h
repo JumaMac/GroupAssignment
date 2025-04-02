@@ -13,8 +13,6 @@ struct Ingredient {
     char name[ING_SIZE];
     float amount;
     char unit[3]; // g, ml, oz
-
-
 };
 
 struct Recipe {
@@ -23,11 +21,7 @@ struct Recipe {
     struct Ingredient ingredients[ING_AMT]; //struct of ingredients so i can loop through the amount and name separately from the recipe
     int ingCount; //ingredient count needed so each recipe could have differing amounts of ingredients
     char instructions[INSTRUCT_SIZE]; //defining instructions to be added in database.h - THOMAS 
-    // int servings;
-    // float newAMT;
 };
-
-
 void viewRecipes(struct Recipe recipes[], int *recipeCount);
 void addRecipes(struct Recipe recipes[], int *recipeCount);
 void editRecipes(struct Recipe recipes[], int *recipeCount);
