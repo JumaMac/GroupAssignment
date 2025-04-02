@@ -5,11 +5,11 @@
 
 // ⭐️ start of code by Justin
 void viewRecipes(struct Recipe recipes[], int *recipeCount) {
-
+    // if user has no recipes in their book, error message pops up
     if (*recipeCount == 0) {
         printf("No available recipes.\n");
         return;
-
+    // if not, prints the recipe
     } else {
         printf("Recipes: \n");
         for (int i = 0; i < *recipeCount; i++) {
@@ -17,7 +17,10 @@ void viewRecipes(struct Recipe recipes[], int *recipeCount) {
             printf("Name: %s\n", recipes[i].name);
             printf("Ingredients: \n");
             for (int j = 0; j < recipes[i].ingCount; j++) {
-                printf(" -%s: %.2fg\n", recipes[i].ingredients[j].name, recipes[i].ingredients[j].amount);
+                printf(" -%s: %.2f%s\n", 
+                    recipes[i].ingredients[j].name, 
+                    recipes[i].ingredients[j].amount,
+                    recipes[i].ingredients[j].unit);
             }
             printf("Instructions: \n");
             printf("%s\n", recipes[i].instructions);
@@ -38,13 +41,13 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
     }
     // Add recipes 
     printf("Enter recipe name: ");
-    scanf(" %[^\n]", recipes[*recipeCount].name); //  %[^\n] allows spaces to be read as strings as well, %s would break the program when adding recipe names that have spaces inbetween
+    scanf(" %49[^\n]", recipes[*recipeCount].name); //  %[^\n] allows spaces to be read as strings as well, %s would break the program when adding recipe names that have spaces inbetween
     // add number of ingredients being used
     printf("How many ingredients will you be using?(%d ingredients allowed): ", ING_AMT);
     scanf("%d", &ingNum);
 
     // error handling if more than the specified ingredients are added
-    if (ingNum > ING_AMT) {
+    if (ingNum > ING_AMT || ingNum <= 0) {
         printf("Too many ingredients used"); 
         return;
     }
@@ -52,46 +55,59 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
     // add ingredients and amount being used
     // depending on the entered amount of ingredients being used, it takes that many inputs storing the data in recipes array
     for (int i = 0; i < ingNum; i++) { 
-        printf("Enter ingredient %d name: ", i + 1);
-        scanf(" %[^\n]", &recipes[*recipeCount].ingredients[i].name);
+        printf("Enter ingredient %d's name: ", i + 1);
+        scanf(" %49[^\n]", recipes[*recipeCount].ingredients[i].name);
+
         printf("Enter amount of %s: ", recipes[*recipeCount].ingredients[i].name);
         scanf("%f", &recipes[*recipeCount].ingredients[i].amount);
-    }
 
+        int unitChoice;
+        printf("Select unit for %s:\n", recipes[*recipeCount].ingredients[i].name);
+        printf("[1] grams (g)\n");
+        printf("[2] milliliters (ml)\n");
+        printf("[3] ounces (oz)\n");
+        printf("Enter your choice (1-3): ");
+        scanf("%d", &unitChoice);
+
+        // depending on the users choice a string is copied into the ingredients.unit array and that value 
+        // is stored for that certain ingredient 
+
+        if (unitChoice == 1) {
+            strcpy(recipes[*recipeCount].ingredients[i].unit, "g");
+        }
+        if (unitChoice == 2) {
+            strcpy(recipes[*recipeCount].ingredients[i].unit, "ml");
+        }
+        if (unitChoice == 3) {
+            strcpy(recipes[*recipeCount].ingredients[i].unit, "oz");
+        }
+    }
      // setting ingCount within the recipes array to what was set as the amount of ingredients used
     recipes[*recipeCount].ingCount = ingNum;
 
     // enter instructions here
     printf("Enter instructions (press Enter twice to finish):\n");
-
-    //variable to keep track of counter 
-    int i = 0;
-    // variable to store newLines when user inputs enter
-    int newlines = 0;
-    // variable to store characters from user input
-    char c;
+    int i = 0; //variable to keep track of counter of characters
+    int newlines = 0; // variable to store newlines when user inputs enter
+    int ch; // variable to store characters from user input
     
     while (i < INSTRUCT_SIZE - 1) {
         // as long as the counter is less than instruction size minus the null terminator 
-        c = getchar();
+        ch = getchar();
         // read a single char from input
-    
-        if (c == '\n') {
+        if (ch == '\n') {
             // if the input is a new line
             newlines++;
             //increment the counter 
-            if (newlines == 2) {
-                // if user enters new line twice 
-                i--;
-                //decrement the counter
-                break;
-                // break the loop
+            if (newlines >= 2) { // if user enters new line twice 
+                i--; //decrement the counter
+                break;  // break the loop
             }
         } else {
             newlines = 0; // reset if non-newline character is encountered
         }
     
-        recipes[*recipeCount].instructions[i] = c;
+        recipes[*recipeCount].instructions[i] = ch;
         // store input into instruction array
         i++;
         // increment i to move to next position in the array 
@@ -108,7 +124,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
 
 void editRecipes(struct Recipe recipes[], int *recipeCount) {
     float newIngAmt;
-    int recipeIndex, ingIndex;
+    int recipeIndex, ingIndex, unitChoice;
     char newName[50];
 
     if (*recipeCount == 0) {
@@ -136,13 +152,18 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     printf("Ingredients in %s:\n", recipes[recipeIndex].name);
     
     for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
-        printf("%d. %s: %.2fg\n", i + 1, recipes[recipeIndex].ingredients[i].name, recipes[recipeIndex].ingredients[i].amount);
+        printf("%d. %s: %.2f%s\n", 
+            i + 1, 
+            recipes[recipeIndex].ingredients[i].name, 
+            recipes[recipeIndex].ingredients[i].amount,
+            recipes[recipeIndex].ingredients[i].unit
+        );
     }
 
     // user can choose specific ingredient to edit based on its index
     printf("Enter ingredient # to update (1-%d): ", recipes[recipeIndex].ingCount);
     scanf("%d", &ingIndex);
-
+    // if any invalid indexes are entered the user is given an error
     if (ingIndex < 1 || ingIndex > recipes[recipeIndex].ingCount) {
         printf("Invalid Choice\n");
         return;
@@ -151,7 +172,7 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     ingIndex--;
     // user can input a new name for ingredient, sets the value within name array of ing struct to user input at the specific index
     printf("Enter new ingredient name: ");
-    scanf(" %[^\n]", recipes[recipeIndex].ingredients[ingIndex].name);
+    scanf(" %49[^\n]", recipes[recipeIndex].ingredients[ingIndex].name);
     // user inputs new ingredient amount set to the variable newIngAmt
     printf("Enter new amount for %s: ", recipes[recipeIndex].ingredients[ingIndex].name);
     if (scanf("%f", &newIngAmt) != 1 ) {
@@ -192,10 +213,14 @@ void deleteRecipes(struct Recipe recipes[], int *recipeCount) {
     recipeIndex--;
 
     // elements are shifted to replace the chosen recipe to be deleted
+    // loop stops when i = recipeCount - 1
     for (int i = recipeIndex; i < *recipeCount - 1; i++) {
+        // eg. recipe[2] = recipe[3]
+        // recipe 3 is replaced by recipe 4 and so on
         recipes[i] = recipes[i + 1];
     }
     // decrement recipe count to reflect the change within the array
+    // hides whatever array was "deleted" as the array shifts
     (*recipeCount)--;
 
     printf("Recipe deleted successfully.\n");
@@ -215,7 +240,7 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
    
     if (choice == 1) {
         printf("Enter recipe name to search: ");
-        scanf(" %[^\n]", searchName); // recipes have spaces so must use %[^\n]
+        scanf(" %49[^\n]", searchName); // recipes have spaces so must use %[^\n]
         // defining a variable found to false to set to true if the recipe is found
         int found = 0;
         for (int i = 0; i < recipeCount; i++) {
@@ -241,7 +266,7 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
     }
     else if (choice == 2) {
         printf("Enter an ingredient to search for: ");
-        scanf(" %[^\n]", searchName); // allow spaces in input
+        scanf(" %49[^\n]", searchName); // allow spaces in input
         int found = 0;
         // to access the nested ingredients struct we have to use a nested for loop 
         for (int i = 0; i < recipeCount; i++) {
@@ -295,9 +320,11 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
         // loop through each ingredient in the current recipe
         for (int j = 0; j < recipes[i].ingCount; j++) {
             // using the ingredient in the format: "- name: amount"
-            fprintf(file, "- %s: %.2f\n", 
+            fprintf(file, "- %s: %.2f%s\n", 
                    recipes[i].ingredients[j].name, 
-                   recipes[i].ingredients[j].amount);
+                   recipes[i].ingredients[j].amount,
+                   recipes[i].ingredients[j].unit
+                );
         }
 
         // Write the instructions section
@@ -308,6 +335,7 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
             recipes[i].instructions
         );
     }
+    printf("\nFile has been successfully updated!\n");
 
     // close the file to ensure all data is written and resources freed
     fclose(file);
@@ -342,11 +370,13 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
         recipes[*recipeCount].ingCount = 0;
         
         // loop to read ingredients until format doesn't match
-        while (fscanf(file, " - %[^:]: %f", 
+        while (fscanf(file, " - %[^:]: %f%2s", 
                      // ingredient format must match exactly to ingredients entered by a user
                      // store in current recipe's ingredients array
                      recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].name,
-                     &recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].amount) == 2) {
+                     &recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].amount,
+                     recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].unit
+                    ) == 3) {
             // increment ingredient count when read is successful
             recipes[*recipeCount].ingCount++;
             
@@ -420,7 +450,11 @@ void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
     //display adjusted ingredient amounts
     printf("Here are the adjusted ingredient amounts for %d serving(s)\n", servings);
     for (int i = 0; i < recipes[recipeIndex].ingCount; i++) {
-        printf(" - %s: %.2f\n", recipes[recipeIndex].ingredients[i].name, recipes[recipeIndex].ingredients[i].amount);
+        printf(" - %s: %.2f%s\n", 
+            recipes[recipeIndex].ingredients[i].name, 
+            recipes[recipeIndex].ingredients[i].amount,
+            recipes[recipeIndex].ingredients[i].unit
+        );
     }
 
     //negates the calculation so that the values return back to how they were

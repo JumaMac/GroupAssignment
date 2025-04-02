@@ -11,7 +11,8 @@
 
 struct Ingredient {
     char name[ING_SIZE];
-     float amount;
+    float amount;
+    char unit[3]; // g, ml, oz
 
 
 };
