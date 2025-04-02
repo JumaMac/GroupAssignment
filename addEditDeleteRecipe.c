@@ -6,13 +6,11 @@
 // ⭐️ start of code by Justin
 void viewRecipes(struct Recipe recipes[], int *recipeCount) {
 
-    if (recipeCount == 0) {
+    if (*recipeCount == 0) {
         printf("No available recipes.\n");
         return;
 
     } else {
-        // print out the recipes that were inputted outputting the names and ingredients being used
-        printf("There are currently %d recipe(s) in the book\n", *recipeCount);
         printf("Recipes: \n");
         for (int i = 0; i < *recipeCount; i++) {
             printf("Recipe %d: \n", i + 1);
@@ -245,9 +243,10 @@ void searchRecipe(struct Recipe recipes[], int recipeCount) {
         printf("Enter an ingredient to search for: ");
         scanf(" %[^\n]", searchName); // allow spaces in input
         int found = 0;
-
+        // to access the nested ingredients struct we have to use a nested for loop 
         for (int i = 0; i < recipeCount; i++) {
             for (int j = 0; j < recipes[i].ingCount; j++) {
+                // a string comparison is done between the ingredient name and the user input
                 if (strcmp(recipes[i].ingredients[j].name, searchName) == 0) {
                     if (!found) {
                         printf("\nRecipes containing '%s':\n", searchName);
@@ -323,10 +322,10 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
     // check if file opening failed
     if (file == NULL) {
         printf("No existing recipe file found. Starting fresh.\n");
-        return;  // Exit function if file doesn't exist
+        return;  // exit function if file doesn't exist
     }
 
-    // Initialize recipe count to 0 
+    // initialize recipe count to 0 
     *recipeCount = 0;
     
     // loop to read recipes until array is full or EOF reached
@@ -344,11 +343,7 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
         
         // loop to read ingredients until format doesn't match
         while (fscanf(file, " - %[^:]: %f", 
-                     // " - " - matches hyphen and spaces
-                     // "%[^:]" - reads characters until colon (ingredient name)
-                     // ": " - matches colon and space
-        
-                     
+                     // ingredient format must match exactly to ingredients entered by a user
                      // store in current recipe's ingredients array
                      recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].name,
                      &recipes[*recipeCount].ingredients[recipes[*recipeCount].ingCount].amount) == 2) {

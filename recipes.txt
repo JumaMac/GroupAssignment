@@ -4,12 +4,12 @@ Ingredients:
 - Garlic: 5.00
 - Salmon: 20.00
 Instructions:
-1. Cut salmon into bite-sized pieces.
+1. Cut salmon into bite sized pieces.
 2. Mix honey and garlic in a bowl.
 3. Coat salmon pieces with the mixture.
 4. Cook in a pan until golden brown.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Mushroom Avocado Toast
 Ingredients:
@@ -18,11 +18,11 @@ Ingredients:
 - Bread: 5.00
 Instructions:
 1. Toast bread until golden.
-2. Slice mushrooms and sauté until tender.
+2. Slice mushrooms and saute until tender.
 3. Mash avocado and spread on toast.
-4. Top with sautéed mushrooms.
+4. Top with sauteed mushrooms.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Vegan French Toast
 Ingredients:
@@ -35,7 +35,7 @@ Instructions:
 3. Cook on a skillet until golden brown on both sides.
 4. Serve with syrup or fruit.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Sun-Dried Tomato Pesto Pasta
 Ingredients:
@@ -45,10 +45,10 @@ Ingredients:
 Instructions:
 1. Boil pasta until al dente.
 2. Drain and mix with pesto.
-3. Chop sun-dried tomatoes and add to pasta.
+3. Chop sun dried tomatoes and add to pasta.
 4. Toss everything together and serve.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Ultimate Salmon Burger
 Ingredients:
@@ -61,7 +61,7 @@ Instructions:
 3. Cook patties in a pan until cooked through.
 4. Assemble burger with buns and lettuce.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Chicken Noodle Soup
 Ingredients:
@@ -74,7 +74,7 @@ Instructions:
 3. Add noodles and cook until soft.
 4. Stir in shredded chicken and simmer.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Homemade Gluten-Free Oreos
 Ingredients:
@@ -87,7 +87,7 @@ Instructions:
 3. Bake until firm.
 4. Assemble cookies with a filling of choice.
 
-------------------------------
+-------------------------------
 
 Recipe Name: Chocolate Cake Mix Cookies
 Ingredients:
@@ -100,4 +100,4 @@ Instructions:
 3. Bake until set.
 4. Let cool before serving.
 
-------------------------------
+-------------------------------
