@@ -5,6 +5,188 @@
 #include "recipe.h"
 #include "database.h"
 #include "display.h"
+#include "raylib.h"
+#include "functions.h" // Include functions.h
+
+// Game State enum
+typedef enum {
+    GAME_STATE_HOME,
+    GAME_STATE_PLAYING,
+    GAME_STATE_GAME_OVER
+} GameState;
+
+
+void rungame() {
+    //variable declaration
+    const int screenWidth = 1000;
+    const int screenHeight = 600;
+    GameState gameState = GAME_STATE_HOME;
+    bool soundOn = true;
+    int score = 0;
+    int lives = 5;
+
+    // initialize the window and audio device
+    InitWindow(screenWidth, screenHeight, "Meow-nster: Eats it all!");
+    InitAudioDevice();
+
+    // load images to be used
+    Texture2D background = LoadTexture("assets/homepage/sky.png");
+    Texture2D logo = LoadTexture("assets/homepage/meownsterlogo.png");
+    Texture2D startButton = LoadTexture("assets/homepage/start-button.png");
+    Texture2D soundButton = LoadTexture("assets/homepage/sound-on-button.png");
+    Texture2D popcat = LoadTexture("assets/popcat_spritesheet.png");
+    Music music = LoadMusicStream("assets/music.mp3");
+    Texture2D heart = LoadTexture("assets/heart.png");
+    Texture2D restartButton = LoadTexture("assets/homepage/restart-button.png");
+
+    // load array of food images
+    Texture2D foodTextures[11];
+    foodTextures[0] = LoadTexture("assets/food/cake_strawberry.png");
+    foodTextures[1] = LoadTexture("assets/food/fruit_banana.png");
+    foodTextures[2] = LoadTexture("assets/food/fruit_apple.png");
+    foodTextures[3] = LoadTexture("assets/food/fruit_watermelon_slice.png");
+    foodTextures[4] = LoadTexture("assets/food/eggs_fried.png");
+    foodTextures[5] = LoadTexture("assets/food/soda_pepsi.png");
+    foodTextures[6] = LoadTexture("assets/food/vegetable_carrot.png");
+    foodTextures[7] = LoadTexture("assets/food/vegetable_corn.png");
+    foodTextures[8] = LoadTexture("assets/food/fruit_strawberry.png");
+    foodTextures[9] = LoadTexture("assets/food/coffee_tea.png");
+    foodTextures[10] = LoadTexture("assets/food/icecream.png");
+
+    // initialize the food
+    Food food = {GetRandomValue(50, 950), -50, true, 0};
+    float fallSpeed = 0.15f;
+    float foodScaleFactor = 3.0f;
+
+    // so that hover of buttons is not blocky
+    SetTextureFilter(startButton, TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(soundButton, TEXTURE_FILTER_BILINEAR);
+    SetTextureFilter(restartButton, TEXTURE_FILTER_BILINEAR);
+
+    //play music on start
+    PlayMusicStream(music);
+
+    // variables for button scaling
+    float scaleStart = 1.0f;
+    float scaleSound = 1.0f;
+    float restartButtonScale = 0.8f;
+    Rectangle startButtonRect = {300, 245, startButton.width, startButton.height};
+    Rectangle soundButtonRect = {930, 20, soundButton.width, soundButton.height};
+    Rectangle restartButtonRect = {screenWidth / 2 - restartButton.width / 2 * restartButtonScale, screenHeight / 2 + 75, restartButton.width * restartButtonScale, restartButton.height * restartButtonScale};
+
+    // variables for spritesheet animation
+    int totalFrames = 6;
+    int frameWidth = popcat.width / totalFrames;
+    int frameHeight = popcat.height;
+    int currentFrame = 0, frameCounter = 0, frameSpeed = 250;
+    float spritePosX = 30.0f, spritePosY = 460.0f, scaleFactor = 0.3f;
+
+    while (!WindowShouldClose()) {
+        // updating stuff
+        UpdateAnimation(&currentFrame, &frameCounter, frameSpeed, totalFrames);
+        UpdateMusicStream(music);
+
+        // this function handles hover of start and sound button
+        scaleWhenHover(startButtonRect, soundButtonRect, &scaleStart, &scaleSound);
+        scaleGameOverButton(restartButtonRect, &restartButtonScale);
+
+        // if Start button is pressed
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            if (CheckCollisionPointRec(GetMousePosition(), startButtonRect)) {
+                gameState = GAME_STATE_PLAYING;
+                score = 0;
+                lives = 5;
+                food.y = -50;
+                food.x = GetRandomValue(50, GetScreenWidth() - 50);
+                fallSpeed = 0.15f;
+            }
+        }
+
+        BeginDrawing();
+            ClearBackground(RAYWHITE);
+            DrawTexture(background, 0, 0, WHITE);
+
+            // draw sound button with scaling effect
+            Vector2 soundButtonPosition = {soundButtonRect.x + soundButtonRect.width / 2 - soundButton.width * scaleSound / 2,
+                                           soundButtonRect.y + soundButtonRect.height / 2 - soundButton.height * scaleSound / 2};
+            DrawTextureEx(soundButton, soundButtonPosition, 0.0f, scaleSound, WHITE);
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            if (CheckCollisionPointRec(GetMousePosition(), soundButtonRect)) {
+                // Toggle the sound on and off
+                soundOn = !soundOn;
+
+                if (soundOn) {
+                    // Load the sound-on button texture
+                    soundButton = LoadTexture("assets/homepage/sound-on-button.png");
+                    PlayMusicStream(music);
+                } else {
+                    // Load the sound-off button texture
+                    soundButton = LoadTexture("assets/homepage/sound-off-button.png");
+                    StopMusicStream(music);
+                }
+            }
+        }
+
+        if (gameState == GAME_STATE_HOME) {
+            //this is the homepage
+            DrawTexture(logo, 100, 20, WHITE);
+            DrawHomePageFood(foodTextures, 11, 3.0f, 130.0f, 195.0f, 22.0f);
+            DrawSprite(popcat, frameWidth, frameHeight, currentFrame, spritePosX, spritePosY, scaleFactor);
+            Vector2 startButtonPosition = {startButtonRect.x + startButtonRect.width / 2 - startButton.width * scaleStart / 2,
+                                           startButtonRect.y + startButtonRect.height / 2 - startButton.height * scaleStart / 2};
+            DrawTextureEx(startButton, startButtonPosition, 0.0f, scaleStart, WHITE);
+            DrawTextureEx(soundButton, soundButtonPosition, 0.0f, scaleSound, WHITE);
+        } else if (gameState == GAME_STATE_PLAYING) {
+            // gameplay happens here
+            UpdateMovement(&spritePosX, frameWidth, scaleFactor);
+            UpdateFood(&food, &fallSpeed, GetScreenHeight(), &lives, score);
+
+            int foodWidth = foodTextures[food.textureIndex].width * foodScaleFactor;
+            int foodHeight = foodTextures[food.textureIndex].height * foodScaleFactor;
+
+            DrawFood(foodTextures, food, foodScaleFactor);
+            DrawText(TextFormat("Score: %d", score), 20, 20, 30, WHITE);
+            DrawLives(lives, screenWidth, screenHeight, heart);
+
+            if (CheckCollision(spritePosX, spritePosY, frameWidth * scaleFactor, frameHeight * scaleFactor, food, foodWidth, foodHeight)) {
+                score++;
+                food.y = -50;
+                food.x = GetRandomValue(50, GetScreenWidth() - 50);
+                food.textureIndex = GetRandomValue(0, 10);
+            }
+            if (lives <= 0) {
+                gameState = GAME_STATE_GAME_OVER;
+            }
+            DrawSprite(popcat, frameWidth, frameHeight, currentFrame, spritePosX, spritePosY, scaleFactor);
+        } else if (gameState == GAME_STATE_GAME_OVER) {
+            DrawGameOverScreen(screenWidth, screenHeight, score, restartButton, &restartButtonScale);
+             if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+                if (CheckCollisionPointRec(GetMousePosition(), restartButtonRect)) {
+                    gameState = GAME_STATE_HOME;
+                    lives = 5;
+                    score = 0;
+                    food.y = -50;
+                    food.x = GetRandomValue(50, GetScreenWidth() - 50);
+                    fallSpeed = 0.15f;
+                }
+            }
+        }
+        EndDrawing();
+    }
+
+    // Unload all textures before closing
+    UnloadAllTextures(background, logo, startButton, soundButton, heart);
+    UnloadTexture(popcat);
+    UnloadTexture(restartButton);
+    for (int i = 0; i < 10; i++) {
+        UnloadTexture(foodTextures[i]);
+    }
+    CloseAudioDevice();
+    StopMusicStream(music);
+    CloseWindow();
+}
+
 int main()
 {
     int choice;
@@ -229,14 +411,7 @@ int main()
             // ⭐️ code by jaismin
         case 3: // Game Section
         {
-            printf("[1] Meow-nster: Eats it all!\n");
-            printf("The game is not incorporated with the main code yet, but you can go check it out on https://github.com/JumaMac/GroupAssignment/blob/main/meow-nster.c\n");
-            printf("Or view a demo video of it running on https://github.com/user-attachments/assets/fb11ec3d-6e46-4b2d-97be-d74a06217c62\n");
-            printf("Press Enter to go back to the home page...\n");
-
-            // Wait for user input to go back to the home page
-            getchar(); // This is to capture the newline character left in the input buffer after previous input
-            getchar(); // Wait for the user to press Enter
+            rungame();
         }
         break;
 
