@@ -3,8 +3,8 @@
 CC = gcc
 CFLAGS = -I.
 LDFLAGS = -L/opt/homebrew/lib -lraylib -framework CoreVideo -framework IOKit -framework Cocoa -framework GLUT -framework OpenGL
-TARGET = meow-nster
-SRCS = meow-nster.c
+TARGET = theRecipeBox
+SRCS = theRecipeBox.c addEditDeleteRecipe.c functions.c
 
 # Rule to compile the program
 $(TARGET): $(SRCS)
