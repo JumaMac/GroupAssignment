@@ -185,6 +185,7 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     // if not, put the character back and read the full name
     ungetc(firstChar, stdin);
     scanf("%d", &recipeIndex);
+    while (getchar() != '\n'); //clear buffer
 
     // user input is set as the recipes index
     if (recipeIndex < 1 || recipeIndex > *recipeCount) {
