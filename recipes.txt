@@ -1,20 +1,103 @@
-Recipe Name: French Onion Soup
+Recipe Name: Honey Garlic Salmon Bites
 Ingredients:
-- French: 20.00
-- Onion: 30.00
-- Soup: 40.00
+- Honey: 10.00
+- Garlic: 5.00
+- Salmon: 20.00
 Instructions:
-1. Mix and cook
+1. Cut salmon into bite-sized pieces.
+2. Mix honey and garlic in a bowl.
+3. Coat salmon pieces with the mixture.
+4. Cook in a pan until golden brown.
 
--------------------------------
+------------------------------
 
-Recipe Name: French Toast
+Recipe Name: Mushroom Avocado Toast
 Ingredients:
-- Sliced Bread: 1.00
-- Butter: 2.00
-- Cinnamon: 3.00
+- Mushrooms: 15.00
+- Avocado: 10.00
+- Bread: 5.00
 Instructions:
-1. Butter the pan
-2. Cook the toast or smthn like that
+1. Toast bread until golden.
+2. Slice mushrooms and sauté until tender.
+3. Mash avocado and spread on toast.
+4. Top with sautéed mushrooms.
 
--------------------------------
+------------------------------
+
+Recipe Name: Vegan French Toast
+Ingredients:
+- Bread: 10.00
+- Plant Milk: 15.00
+- Cinnamon: 5.00
+Instructions:
+1. Mix plant milk and cinnamon in a bowl.
+2. Dip bread slices into the mixture.
+3. Cook on a skillet until golden brown on both sides.
+4. Serve with syrup or fruit.
+
+------------------------------
+
+Recipe Name: Sun-Dried Tomato Pesto Pasta
+Ingredients:
+- Pasta: 20.00
+- Sun-Dried Tomatoes: 15.00
+- Pesto: 10.00
+Instructions:
+1. Boil pasta until al dente.
+2. Drain and mix with pesto.
+3. Chop sun-dried tomatoes and add to pasta.
+4. Toss everything together and serve.
+
+------------------------------
+
+Recipe Name: Ultimate Salmon Burger
+Ingredients:
+- Salmon: 30.00
+- Buns: 10.00
+- Lettuce: 5.00
+Instructions:
+1. Blend or chop salmon finely.
+2. Mix with seasonings and form into patties.
+3. Cook patties in a pan until cooked through.
+4. Assemble burger with buns and lettuce.
+
+------------------------------
+
+Recipe Name: Chicken Noodle Soup
+Ingredients:
+- Chicken: 20.00
+- Noodles: 15.00
+- Broth: 10.00
+Instructions:
+1. Cook chicken until fully done and shred it.
+2. Boil broth in a large pot.
+3. Add noodles and cook until soft.
+4. Stir in shredded chicken and simmer.
+
+------------------------------
+
+Recipe Name: Homemade Gluten-Free Oreos
+Ingredients:
+- Gluten-Free Flour: 20.00
+- Cocoa Powder: 10.00
+- Sugar: 15.00
+Instructions:
+1. Mix flour, cocoa powder, and sugar into a dough.
+2. Roll out and cut into circles.
+3. Bake until firm.
+4. Assemble cookies with a filling of choice.
+
+------------------------------
+
+Recipe Name: Chocolate Cake Mix Cookies
+Ingredients:
+- Cake Mix: 20.00
+- Eggs: 10.00
+- Butter: 10.00
+Instructions:
+1. Mix cake mix, eggs, and melted butter in a bowl.
+2. Shape into cookie dough balls.
+3. Bake until set.
+4. Let cool before serving.
+
+------------------------------
