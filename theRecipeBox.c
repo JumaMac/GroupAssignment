@@ -68,7 +68,7 @@ int main()
                 printf("[3] Dinner Delights\n");
                 printf("[4] Desserts & Sweets\n");
                 printf("[5] Vegetarian & Vegan\n");
-                printf("[0] Go Back\n");
+                printf("[0] Go Back to Homepage\n");
                 printf("Enter your choice: ");
 
                 scanf("%d", &cat_choice);  
