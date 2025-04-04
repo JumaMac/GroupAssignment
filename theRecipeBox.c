@@ -27,7 +27,6 @@ int main()
     // call the initRecipes from database.h to load all recipes
     int recipeCount = initRecipes(recipes);
     loadRecipesFromFile(recipes, &recipeCount);
-    int ingNum;
 
     // ⭐️ code by Jaismin
     while (1)
@@ -450,5 +449,3 @@ void rungame() {
     StopMusicStream(music);
     CloseWindow();
 }
-
-// ⭐️ end of code by Jaismin

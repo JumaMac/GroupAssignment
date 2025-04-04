@@ -11,9 +11,9 @@ void viewRecipes(struct Recipe recipes[], int *recipeCount) {
         return;
     // if not, prints the recipe
     } else {
-        printf("Recipes: \n");
+        printf("\nRecipes: \n");
         for (int i = 0; i < *recipeCount; i++) {
-            printf("Recipe %d: \n", i + 1);
+            printf("\nRecipe %d: \n", i + 1);
             printf("Name: %s\n", recipes[i].name);
             printf("Ingredients: \n");
             for (int j = 0; j < recipes[i].ingCount; j++) {
@@ -38,7 +38,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
         // needed the program to keep running even when an error is hit
         return; 
     }
-    // Add recipes 
+    // add recipes 
     printf("Enter recipe name(Enter to go back): ");
     char firstChar;
     if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
@@ -126,31 +126,30 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
     printf("Enter instructions (press Enter twice to finish):\n");
     int i = 0; //variable to keep track of counter of characters
     int newlines = 0; // variable to store newlines when user inputs enter
-    int ch; // variable to store characters from user input
+    int instructions; // variable to store characters from user input
     
     while (i < INSTRUCT_SIZE - 1) {
-        // as long as the counter is less than instruction size minus the null terminator 
-        ch = getchar();
+        // as long as the counter is less than instruction size minus the null terminator it will
+        instructions = getchar();
         // read a single char from input
-        if (ch == '\n') {
+        if (instructions == '\n') {
             // if the input is a new line
             newlines++;
             //increment the counter 
             if (newlines >= 2) { // if user enters new line twice 
-                i--; //decrement the counter
+                i--;
                 break;  // break the loop
             }
         } else {
             newlines = 0; // reset if non-newline character is encountered
         }
     
-        recipes[*recipeCount].instructions[i] = ch;
+        recipes[*recipeCount].instructions[i] = instructions;
         // store input into instruction array
         i++;
         // increment i to move to next position in the array 
     }
-    
-    recipes[*recipeCount].instructions[i] = '\0'; // Null-terminate the string
+    recipes[*recipeCount].instructions[i] = '\0'; // null-terminate the string
     
     // increment recipe by 1 to reflect how many recipes are within the recipes array, without it new recipes would overwrite existing ones as the index remains the same  
     (*recipeCount)++;  
@@ -161,8 +160,7 @@ void addRecipes(struct Recipe recipes[], int *recipeCount) {
 
 void editRecipes(struct Recipe recipes[], int *recipeCount) {
     float newIngAmt;
-    int recipeIndex, ingIndex, unitChoice;
-    char newName[50];
+    int recipeIndex, ingIndex;
 
     if (*recipeCount == 0) {
         printf("No recipes to update\n");
@@ -253,6 +251,56 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
     recipes[recipeIndex].ingredients[ingIndex].amount = newIngAmt;
     
     printf("Ingredient updated successfully.\n");
+
+        // ask if user wants to edit instructions
+        printf("Would you like to edit the instructions? (y/n): ");
+        if (scanf("%c", &firstChar) == 1 && firstChar == '\n') {
+            printf("Returning to menu...\n");
+            return;
+        }
+        ungetc(firstChar, stdin);
+        // set a variable if the user wants to edit the instructions or not
+        char insChoice;
+        scanf(" %c", &insChoice);
+        // clear new line input buffer
+        while (getchar() != '\n');
+        // if the choice is yes, instructions need to be cleared 
+        if (insChoice == 'y' || insChoice == 'Y') {
+            printf("Enter new instructions (press Enter twice to finish):\n");
+            int i = 0;
+            int newlines = 0;
+            int newInstruct;
+            
+            // can clear instructions by setting first character to null terminator at the specific recipe index
+            recipes[recipeIndex].instructions[0] = '\0';
+            
+            // loop while counter of characters remain less than instruction size minus null terminator
+            while (i < INSTRUCT_SIZE - 1) {
+                // newInstruct holds the characters
+                newInstruct = getchar();
+                if (newInstruct == '\n') {
+                    //if character is newline increment newline counter by 1
+                    newlines++;
+                    // will loop until newline is = 2 (double enter)
+                    if (newlines >= 2) {
+                        i--;
+                        break;
+                    }
+                } else {
+                    newlines = 0;
+                }
+                //instructions are set to what was inputted by user in newInstruct
+                recipes[recipeIndex].instructions[i] = newInstruct;
+                // increment the change in the array to show change
+                i++;
+            }
+            // terminate the string after new instructions are read
+            recipes[recipeIndex].instructions[i] = '\0';
+            printf("Instructions updated successfully.\n");
+        }
+        else {
+            printf("Instructions will remain unchanged.\n");
+        }
     
     // save recipes to file after editing
     saveRecipesToFile(recipes, *recipeCount);
@@ -428,14 +476,12 @@ void saveRecipesToFile(struct Recipe recipes[], int recipeCount) {
                    recipes[i].ingredients[j].unit
                 );
         }
-
         // Write the instructions section
-        fprintf(file, 
-            "Instructions:\n"  // instructions header
-            "%s\n"            // instructions content
-            "-------------------------------\n",  // delimiter helps separate recipes
-            recipes[i].instructions
-        );
+        // header and content
+        fprintf(file, "Instructions:\n%s",recipes[i].instructions);
+        if (i < recipeCount - 1) {  // only write delimiter if not the last recipe
+            fprintf(file, "\n-------------------------------\n");
+        }
     }
     printf("\nFile has been successfully updated!\n");
 
@@ -487,14 +533,13 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
         }
 
         // read and discard the "Instructions:" header line
-        fscanf(file, " Instructions:\n");
-        
         // read instructions text until first hyphen (start of delimiter)
         // %[^-] reads all characters that are not hyphens
-        fscanf(file, " %[^-] ", recipes[*recipeCount].instructions);
+        fscanf(file, " Instructions:\n%[^-]", recipes[*recipeCount].instructions);
+        
         
         // discard the delimiter line and new line
-        fscanf(file, "-------------------------------\n");
+        fscanf(file, "\n-------------------------------\n");
         
         // move to next recipe slot in array
         (*recipeCount)++;
@@ -507,7 +552,6 @@ void loadRecipesFromFile(struct Recipe recipes[], int *recipeCount) {
 
 // ⭐️ start of code by Mikey
 void adjustIngredients(struct Recipe recipes[], int *recipeCount) {
-    float adjustedIngAmt;
     int recipeIndex;
     int servings;
     char firstChar;
