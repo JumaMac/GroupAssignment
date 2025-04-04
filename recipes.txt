@@ -8,12 +8,6 @@ Instructions:
 2. Mix honey and garlic in a bowl.
 3. Coat salmon pieces with the mixture.
 4. Cook in a pan until golden brown.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Mushroom Avocado Toast
 Ingredients:
@@ -25,12 +19,6 @@ Instructions:
 2. Slice mushrooms and saute until tender.
 3. Mash avocado and spread on toast.
 4. Top with sauteed mushrooms.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Vegan French Toast
 Ingredients:
@@ -42,12 +30,6 @@ Instructions:
 2. Dip bread slices into the mixture.
 3. Cook on a skillet until golden brown on both sides.
 4. Serve with syrup or fruit.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Sun-Dried Tomato Pesto Pasta
 Ingredients:
@@ -59,12 +41,6 @@ Instructions:
 2. Drain and mix with pesto.
 3. Chop sun dried tomatoes and add to pasta.
 4. Toss everything together and serve.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Ultimate Salmon Burger
 Ingredients:
@@ -76,12 +52,6 @@ Instructions:
 2. Mix with seasonings and form into patties.
 3. Cook patties in a pan until cooked through.
 4. Assemble burger with buns and lettuce.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Chicken Noodle Soup
 Ingredients:
@@ -93,12 +63,6 @@ Instructions:
 2. Boil broth in a large pot.
 3. Add noodles and cook until soft.
 4. Stir in shredded chicken and simmer.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Homemade Gluten-Free Oreos
 Ingredients:
@@ -110,12 +74,6 @@ Instructions:
 2. Roll out and cut into circles.
 3. Bake until firm.
 4. Assemble cookies with a filling of choice.
-
-
-
-
-
-
 -------------------------------
 Recipe Name: Chocolate Cake Mix Cookies
 Ingredients:
@@ -127,31 +85,37 @@ Instructions:
 2. Shape into cookie dough balls.
 3. Bake until set.
 4. Let cool before serving.
-
-
-
-
-
-
 -------------------------------
-Recipe Name: Curry
+Recipe Name: Chicken Curry
 Ingredients:
-- Potatos: 30.00g
-- Curry block: 5.00g
-- Water: 400.00ml
-- Beef: 150.00g
+- Chicken: 400.00g
+- Curry: 500.00ml
 Instructions:
-1. Mix everything in a pot
-2. Cook it nicely
-3. Eat and profit
-
-
-
+1. Cook it
 -------------------------------
-Recipe Name: Curry
+Recipe Name: Goat Curry
 Ingredients:
-- Tomatoes: 1000.00g
+- Goat: 450.00g
+- Curry: 500.00ml
 Instructions:
-1. Just do some stuff
-
+1. Cook the goat really well
 -------------------------------
+Recipe Name: 1
+Ingredients:
+- 1: 1.00g
+Instructions:
+1
+-------------------------------
+Recipe Name: 1
+Ingredients:
+- 1: 1.00g
+Instructions:
+1
+1
+-------------------------------
+Recipe Name: 1
+Ingredients:
+- 1: 1.00g
+Instructions:
+1
+

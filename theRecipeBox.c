@@ -195,7 +195,6 @@ int main()
     // call the initRecipes from database.h to load all recipes
     int recipeCount = initRecipes(recipes);
     loadRecipesFromFile(recipes, &recipeCount);
-    int ingNum;
 
     // ⭐️ code by Jaismin
     while (1)
@@ -239,7 +238,8 @@ int main()
                 printf("[0] Go Back\n");
                 printf("Enter your choice: ");
 
-                scanf("%d", &cat_choice);  
+                scanf("%d", &cat_choice);
+                while (getchar() != '\n');  
 
                 if (cat_choice == 0) break; // Go back to home page
 
@@ -254,6 +254,7 @@ int main()
 
                         printf("Enter your choice: ");
                         scanf("%d", &recipe_choice);
+                        while (getchar() != '\n');
 
                         if (recipe_choice == 0) {
                             break; // Goes back to category selection
@@ -267,6 +268,7 @@ int main()
                                         printf("How many servings do you want to make?: ");
                                         
                                         scanf("%d", &servings);
+                                        while (getchar() != '\n');
 // ⭐️ code by mikey 
                                         //ingredient list 
                                         char *ingredients[] = {
@@ -310,6 +312,7 @@ int main()
                                         printf("\n[0] Return to Category Menu\n\n");
                                         printf("Enter your choice: ");
                                         scanf("%d", &recipe_choice);
+                                        while (getchar() != '\n');
                                         if (recipe_choice == 0) {
                                                 break; // Go back
                                         }
