@@ -276,7 +276,7 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
             
             // loop while counter of characters remain less than instruction size minus null terminator
             while (i < INSTRUCT_SIZE - 1) {
-                // ch holds the characters
+                // newInstruct holds the characters
                 newInstruct = getchar();
                 if (newInstruct == '\n') {
                     //if character is newline increment newline counter by 1
@@ -289,7 +289,7 @@ void editRecipes(struct Recipe recipes[], int *recipeCount) {
                 } else {
                     newlines = 0;
                 }
-                //instructions are set to what was inputted by user in ch
+                //instructions are set to what was inputted by user in newInstruct
                 recipes[recipeIndex].instructions[i] = newInstruct;
                 // increment the change in the array to show change
                 i++;
